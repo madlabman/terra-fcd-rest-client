@@ -4,6 +4,8 @@ Generated on official [swagger documentation](https://fcd.terra.dev/swagger/) RE
 
 ### Generate code
 
+1. Install [go-swagger](https://github.com/go-swagger/go-swagger)
+2. Run generate script
 ```
 make generate
 ```
