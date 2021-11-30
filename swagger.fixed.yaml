@@ -996,13 +996,10 @@ paths:
                       sequence:
                         type: string
                         example: '0'
-                required: true
               mode:
-                required: true
                 type: string
                 example: block
               sequences:
-                required: false
                 type: array
                 items:
                   type: string
@@ -1011,7 +1008,9 @@ paths:
                 type: string
                 description: bech32 encoded address
                 example: terra1wg2mlrxdmnnkkykgqg4znky86nyrtc45q336yv
-                required: false
+            required:
+              - tx
+              - mode
       responses:
         '200':
           description: Tx broadcasting result
@@ -1110,7 +1109,6 @@ paths:
         - in: body
           name: tx
           description: The tx to encode
-          required: true
           schema:
             type: object
             properties:
@@ -1162,7 +1160,6 @@ paths:
                         type: string
                         example: '0'
               sequences:
-                required: false
                 type: array
                 items:
                   type: string
@@ -1171,7 +1168,8 @@ paths:
                 type: string
                 description: bech32 encoded address
                 example: terra1wg2mlrxdmnnkkykgqg4znky86nyrtc45q336yv
-                required: false
+            required:
+              - tx
       responses:
         '200':
           description: The tx was successfully decoded and re-encoded
@@ -37584,7 +37582,12 @@ paths:
         - application/json
       produces:
         - application/json
-      parameters: []
+      parameters:
+        - name: txhash
+          in: path
+          required: true
+          type: string
+          description: Tx Hash
       responses:
         '200':
           description: Success
@@ -63518,32 +63521,32 @@ definitions:
     required:
       - type
       - value
-      getTxListResult.txs.tx.value.msg.value:
-        properties:
-          coins:
-            description: ''
-            items:
-              $ref: '#/definitions/getTxListResult.txs.tx.value.msg.value.inputs.coins'
-            type: array
-          sender:
-            description: ''
-            type: string
-          contract:
-            description: ''
-            type: string
-          execute_msg:
-            description: ''
-            type: object
-          inputs:
-            type: array
-            description: ''
-            items:
-              $ref: '#/definitions/getTxListResult.txs.tx.value.msg.value.inputs'
-          outputs:
-            type: array
-            description: ''
-            items:
-              $ref: '#/definitions/getTxListResult.txs.tx.value.msg.value.outputs'
+  getTxListResult.txs.tx.value.msg.value:
+    properties:
+      coins:
+        description: ''
+        items:
+          $ref: '#/definitions/getTxListResult.txs.tx.value.msg.value.inputs.coins'
+        type: array
+      sender:
+        description: ''
+        type: string
+      contract:
+        description: ''
+        type: string
+      execute_msg:
+        description: ''
+        type: object
+      inputs:
+        type: array
+        description: ''
+        items:
+          $ref: '#/definitions/getTxListResult.txs.tx.value.msg.value.inputs'
+      outputs:
+        type: array
+        description: ''
+        items:
+          $ref: '#/definitions/getTxListResult.txs.tx.value.msg.value.outputs'
   getTxListResult.txs.tx.value.msg.value.inputs:
     properties:
       address:
