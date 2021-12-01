@@ -582,21 +582,9 @@ type ProposalsOKBodyProposalsItems0 struct {
 	// proposal id
 	ProposalID string `json:"proposal_id,omitempty"`
 
-	// ProposalStatus enumerates the valid statuses of a proposal.
-	//
-	//  - PROPOSAL_STATUS_UNSPECIFIED: PROPOSAL_STATUS_UNSPECIFIED defines the default propopsal status.
-	//  - PROPOSAL_STATUS_DEPOSIT_PERIOD: PROPOSAL_STATUS_DEPOSIT_PERIOD defines a proposal status during the deposit
-	// period.
-	//  - PROPOSAL_STATUS_VOTING_PERIOD: PROPOSAL_STATUS_VOTING_PERIOD defines a proposal status during the voting
-	// period.
-	//  - PROPOSAL_STATUS_PASSED: PROPOSAL_STATUS_PASSED defines a proposal status of a proposal that has
-	// passed.
-	//  - PROPOSAL_STATUS_REJECTED: PROPOSAL_STATUS_REJECTED defines a proposal status of a proposal that has
-	// been rejected.
-	//  - PROPOSAL_STATUS_FAILED: PROPOSAL_STATUS_FAILED defines a proposal status of a proposal that has
-	// failed.
+	// status
 	// Enum: [PROPOSAL_STATUS_UNSPECIFIED PROPOSAL_STATUS_DEPOSIT_PERIOD PROPOSAL_STATUS_VOTING_PERIOD PROPOSAL_STATUS_PASSED PROPOSAL_STATUS_REJECTED PROPOSAL_STATUS_FAILED]
-	Status *string `json:"status,omitempty"`
+	Status string `json:"status,omitempty"`
 
 	// submit time
 	// Format: date-time
@@ -753,7 +741,7 @@ func (o *ProposalsOKBodyProposalsItems0) validateStatus(formats strfmt.Registry)
 	}
 
 	// value enum
-	if err := o.validateStatusEnum("status", "body", *o.Status); err != nil {
+	if err := o.validateStatusEnum("status", "body", o.Status); err != nil {
 		return err
 	}
 

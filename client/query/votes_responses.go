@@ -573,7 +573,7 @@ type VotesOKBodyVotesItems0 struct {
 	// if and only if `len(options) == 1` and that option has weight 1. In all
 	// other cases, this field will default to VOTE_OPTION_UNSPECIFIED.
 	// Enum: [VOTE_OPTION_UNSPECIFIED VOTE_OPTION_YES VOTE_OPTION_ABSTAIN VOTE_OPTION_NO VOTE_OPTION_NO_WITH_VETO]
-	Option *string `json:"option,omitempty"`
+	Option string `json:"option,omitempty"`
 
 	// options
 	Options []*VotesOKBodyVotesItems0OptionsItems0 `json:"options"`
@@ -647,7 +647,7 @@ func (o *VotesOKBodyVotesItems0) validateOption(formats strfmt.Registry) error {
 	}
 
 	// value enum
-	if err := o.validateOptionEnum("option", "body", *o.Option); err != nil {
+	if err := o.validateOptionEnum("option", "body", o.Option); err != nil {
 		return err
 	}
 
@@ -745,7 +745,7 @@ type VotesOKBodyVotesItems0OptionsItems0 struct {
 	//  - VOTE_OPTION_NO: VOTE_OPTION_NO defines a no vote option.
 	//  - VOTE_OPTION_NO_WITH_VETO: VOTE_OPTION_NO_WITH_VETO defines a no with veto vote option.
 	// Enum: [VOTE_OPTION_UNSPECIFIED VOTE_OPTION_YES VOTE_OPTION_ABSTAIN VOTE_OPTION_NO VOTE_OPTION_NO_WITH_VETO]
-	Option *string `json:"option,omitempty"`
+	Option string `json:"option,omitempty"`
 
 	// weight
 	Weight string `json:"weight,omitempty"`
@@ -809,7 +809,7 @@ func (o *VotesOKBodyVotesItems0OptionsItems0) validateOption(formats strfmt.Regi
 	}
 
 	// value enum
-	if err := o.validateOptionEnum("option", "body", *o.Option); err != nil {
+	if err := o.validateOptionEnum("option", "body", o.Option); err != nil {
 		return err
 	}
 

@@ -28,7 +28,7 @@ type CosmosGovV1beta1WeightedVoteOption struct {
 	//  - VOTE_OPTION_NO: VOTE_OPTION_NO defines a no vote option.
 	//  - VOTE_OPTION_NO_WITH_VETO: VOTE_OPTION_NO_WITH_VETO defines a no with veto vote option.
 	// Enum: [VOTE_OPTION_UNSPECIFIED VOTE_OPTION_YES VOTE_OPTION_ABSTAIN VOTE_OPTION_NO VOTE_OPTION_NO_WITH_VETO]
-	Option *string `json:"option,omitempty"`
+	Option string `json:"option,omitempty"`
 
 	// weight
 	Weight string `json:"weight,omitempty"`
@@ -92,7 +92,7 @@ func (m *CosmosGovV1beta1WeightedVoteOption) validateOption(formats strfmt.Regis
 	}
 
 	// value enum
-	if err := m.validateOptionEnum("option", "body", *m.Option); err != nil {
+	if err := m.validateOptionEnum("option", "body", m.Option); err != nil {
 		return err
 	}
 

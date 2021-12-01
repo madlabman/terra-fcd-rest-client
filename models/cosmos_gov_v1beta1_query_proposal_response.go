@@ -124,21 +124,9 @@ type CosmosGovV1beta1QueryProposalResponseProposal struct {
 	// proposal id
 	ProposalID string `json:"proposal_id,omitempty"`
 
-	// ProposalStatus enumerates the valid statuses of a proposal.
-	//
-	//  - PROPOSAL_STATUS_UNSPECIFIED: PROPOSAL_STATUS_UNSPECIFIED defines the default propopsal status.
-	//  - PROPOSAL_STATUS_DEPOSIT_PERIOD: PROPOSAL_STATUS_DEPOSIT_PERIOD defines a proposal status during the deposit
-	// period.
-	//  - PROPOSAL_STATUS_VOTING_PERIOD: PROPOSAL_STATUS_VOTING_PERIOD defines a proposal status during the voting
-	// period.
-	//  - PROPOSAL_STATUS_PASSED: PROPOSAL_STATUS_PASSED defines a proposal status of a proposal that has
-	// passed.
-	//  - PROPOSAL_STATUS_REJECTED: PROPOSAL_STATUS_REJECTED defines a proposal status of a proposal that has
-	// been rejected.
-	//  - PROPOSAL_STATUS_FAILED: PROPOSAL_STATUS_FAILED defines a proposal status of a proposal that has
-	// failed.
+	// status
 	// Enum: [PROPOSAL_STATUS_UNSPECIFIED PROPOSAL_STATUS_DEPOSIT_PERIOD PROPOSAL_STATUS_VOTING_PERIOD PROPOSAL_STATUS_PASSED PROPOSAL_STATUS_REJECTED PROPOSAL_STATUS_FAILED]
-	Status *string `json:"status,omitempty"`
+	Status string `json:"status,omitempty"`
 
 	// submit time
 	// Format: date-time
@@ -295,7 +283,7 @@ func (m *CosmosGovV1beta1QueryProposalResponseProposal) validateStatus(formats s
 	}
 
 	// value enum
-	if err := m.validateStatusEnum("proposal"+"."+"status", "body", *m.Status); err != nil {
+	if err := m.validateStatusEnum("proposal"+"."+"status", "body", m.Status); err != nil {
 		return err
 	}
 

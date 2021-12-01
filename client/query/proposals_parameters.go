@@ -114,24 +114,7 @@ type ProposalsParams struct {
 	*/
 	PaginationReverse *bool
 
-	/* ProposalStatus.
-
-	     proposal_status defines the status of the proposals.
-
-	 - PROPOSAL_STATUS_UNSPECIFIED: PROPOSAL_STATUS_UNSPECIFIED defines the default propopsal status.
-	 - PROPOSAL_STATUS_DEPOSIT_PERIOD: PROPOSAL_STATUS_DEPOSIT_PERIOD defines a proposal status during the deposit
-	period.
-	 - PROPOSAL_STATUS_VOTING_PERIOD: PROPOSAL_STATUS_VOTING_PERIOD defines a proposal status during the voting
-	period.
-	 - PROPOSAL_STATUS_PASSED: PROPOSAL_STATUS_PASSED defines a proposal status of a proposal that has
-	passed.
-	 - PROPOSAL_STATUS_REJECTED: PROPOSAL_STATUS_REJECTED defines a proposal status of a proposal that has
-	been rejected.
-	 - PROPOSAL_STATUS_FAILED: PROPOSAL_STATUS_FAILED defines a proposal status of a proposal that has
-	failed.
-
-	     Default: "PROPOSAL_STATUS_UNSPECIFIED"
-	*/
+	// ProposalStatus.
 	ProposalStatus *string
 
 	/* Voter.
@@ -157,18 +140,7 @@ func (o *ProposalsParams) WithDefaults() *ProposalsParams {
 //
 // All values with no default are reset to their zero value.
 func (o *ProposalsParams) SetDefaults() {
-	var (
-		proposalStatusDefault = string("PROPOSAL_STATUS_UNSPECIFIED")
-	)
-
-	val := ProposalsParams{
-		ProposalStatus: &proposalStatusDefault,
-	}
-
-	val.timeout = o.timeout
-	val.Context = o.Context
-	val.HTTPClient = o.HTTPClient
-	*o = val
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the proposals params
