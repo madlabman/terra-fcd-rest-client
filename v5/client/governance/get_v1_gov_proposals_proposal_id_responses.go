@@ -12,7 +12,7 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
 
-	"github.com/lidofinance/terra-fcd-rest-client/models"
+	"github.com/lidofinance/terra-fcd-rest-client/v5/models"
 )
 
 // GetV1GovProposalsProposalIDReader is a Reader for the GetV1GovProposalsProposalID structure.

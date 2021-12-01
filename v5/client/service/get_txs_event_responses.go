@@ -16,7 +16,7 @@ import (
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
-	"github.com/lidofinance/terra-fcd-rest-client/models"
+	"github.com/lidofinance/terra-fcd-rest-client/v5/models"
 )
 
 // GetTxsEventReader is a Reader for the GetTxsEvent structure.

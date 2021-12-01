@@ -15,7 +15,7 @@ import (
 	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
 
-	"github.com/lidofinance/terra-fcd-rest-client/models"
+	"github.com/lidofinance/terra-fcd-rest-client/v5/models"
 )
 
 // NewPostV1TxsParams creates a new PostV1TxsParams object,

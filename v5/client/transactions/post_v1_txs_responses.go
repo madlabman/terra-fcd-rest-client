@@ -12,7 +12,7 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
 
-	"github.com/lidofinance/terra-fcd-rest-client/models"
+	"github.com/lidofinance/terra-fcd-rest-client/v5/models"
 )
 
 // PostV1TxsReader is a Reader for the PostV1Txs structure.
