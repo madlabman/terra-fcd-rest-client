@@ -16,7 +16,7 @@ import (
 
 // CosmosTxV1beta1TxBody TxBody is the body of a transaction that all signers sign over.
 //
-// swagger:model cosmos.tx.v1beta1.TxBody
+// swagger:model cosmos.tx.v1beta1.Tx.Body
 type CosmosTxV1beta1TxBody struct {
 
 	// extension_options are arbitrary options that can be added by chains

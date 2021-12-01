@@ -170,7 +170,7 @@ type CosmosTxV1beta1ModeInfoSingle struct {
 	//  - SIGN_MODE_LEGACY_AMINO_JSON: SIGN_MODE_LEGACY_AMINO_JSON is a backwards compatibility mode which uses
 	// Amino JSON and will be removed in the future
 	// Enum: [SIGN_MODE_UNSPECIFIED SIGN_MODE_DIRECT SIGN_MODE_TEXTUAL SIGN_MODE_LEGACY_AMINO_JSON]
-	Mode *string `json:"mode,omitempty"`
+	Mode string `json:"mode,omitempty"`
 }
 
 // Validate validates this cosmos tx v1beta1 mode info single
@@ -228,7 +228,7 @@ func (m *CosmosTxV1beta1ModeInfoSingle) validateMode(formats strfmt.Registry) er
 	}
 
 	// value enum
-	if err := m.validateModeEnum("single"+"."+"mode", "body", *m.Mode); err != nil {
+	if err := m.validateModeEnum("single"+"."+"mode", "body", m.Mode); err != nil {
 		return err
 	}
 
