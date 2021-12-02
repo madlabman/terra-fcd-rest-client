@@ -18,7 +18,8 @@ If you need to make changes to the code, make changes to the specification and g
 1. Choose the desired version folder
 2. Make changes to the specification
 3. Install [go-swagger](https://github.com/go-swagger/go-swagger)
-4. Run the generate script:
+4. Remove the `client` and `models` folders from the version folder
+5. Run the generate script:
 ```
 make generate
 ```
