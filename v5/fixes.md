@@ -1259,3 +1259,295 @@ Fixed:
               QueryParamsResponse is the response type for the Query/Params RPC
               method
 ```
+---
+Official:
+```yaml
+  getProposalResult:
+    properties:
+      id:
+        type: string
+        description: ''
+      proposer:
+        type: object
+        description: Proposer information
+        $ref: '#/definitions/getProposalResult.proposer'
+      type:
+        type: string
+        description: Proposal type
+      status:
+        type: string
+        description: Proposal status
+      submitTime:
+        type: string
+        description: ''
+      title:
+        type: string
+        description: ''
+      description:
+        type: string
+        description: ''
+      deposit:
+        type: object
+        description: ''
+        $ref: '#/definitions/getProposalResult.deposit'
+      vote:
+        type: object
+        description: ''
+        $ref: '#/definitions/getProposalResult.vote'
+      validatorsNotVoted:
+        type: array
+        description: ''
+        items:
+          $ref: '#/definitions/getProposalResult.validatorsNotVoted'
+    required:
+      - id
+      - proposer
+      - type
+      - status
+      - submitTime
+      - title
+      - description
+      - deposit
+      - vote
+      - validatorsNotVoted
+```
+
+Fixed:
+```yaml
+  getProposalResult:
+    properties:
+      id:
+        type: string
+        description: ''
+      proposer:
+        type: object
+        description: Proposer information
+        $ref: '#/definitions/getProposalResult.proposer'
+      type:
+        type: string
+        description: Proposal type
+      status:
+        type: string
+        description: Proposal status
+      submitTime:
+        type: string
+        description: ''
+      title:
+        type: string
+        description: ''
+      description:
+        type: string
+        description: ''
+      deposit:
+        type: object
+        description: ''
+        $ref: '#/definitions/getProposalResult.deposit'
+      vote:
+        type: object
+        description: ''
+        $ref: '#/definitions/getProposalResult.vote'
+      validatorsNotVoted:
+        type: array
+        description: ''
+        items:
+          $ref: '#/definitions/getProposalResult.validatorsNotVoted'
+    required:
+      - id
+      - proposer
+      - type
+      - status
+      - submitTime
+      - title
+      - description
+      - deposit
+      - vote
+```
+---
+Official:
+```yaml
+  '/staking/validators/{validatorAddr}':
+    get:
+      deprecated: true
+      summary: Query the information from a single validator
+      tags:
+        - Staking
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              height:
+                type: string
+              result:
+                type: object
+                properties:
+                  operator_address:
+                    type: string
+                    description: bech32 encoded address
+                    example: terravaloper1wg2mlrxdmnnkkykgqg4znky86nyrtc45q7a85l
+                  consensus_pubkey:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      value:
+                        type: string
+                  jailed:
+                    type: boolean
+                  status:
+                    type: integer
+                  tokens:
+                    type: string
+                  delegator_shares:
+                    type: string
+                  description:
+                    type: object
+                    properties:
+                      moniker:
+                        type: string
+                      identity:
+                        type: string
+                      website:
+                        type: string
+                      security_contact:
+                        type: string
+                      details:
+                        type: string
+                  bond_height:
+                    type: string
+                    example: '0'
+                  bond_intra_tx_counter:
+                    type: integer
+                    example: 0
+                  unbonding_height:
+                    type: string
+                    example: '0'
+                  unbonding_time:
+                    type: string
+                    example: '1970-01-01T00:00:00Z'
+                  commission:
+                    type: object
+                    properties:
+                      rate:
+                        type: string
+                        example: '0'
+                      max_rate:
+                        type: string
+                        example: '0'
+                      max_change_rate:
+                        type: string
+                        example: '0'
+                      update_time:
+                        type: string
+                        example: '1970-01-01T00:00:00Z'
+        '400':
+          description: Invalid validator address
+        '500':
+          description: Internal Server Error
+      parameters:
+        - in: path
+          name: validatorAddr
+          description: Bech32 OperatorAddress of validator
+          required: true
+          type: string
+          x-example: terravaloper1wg2mlrxdmnnkkykgqg4znky86nyrtc45q7a85l
+```
+
+Fixed:
+```yaml
+  '/staking/validators/{validatorAddr}':
+    get:
+      deprecated: true
+      summary: Query the information from a single validator
+      tags:
+        - Staking
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              height:
+                type: string
+              result:
+                type: object
+                properties:
+                  operator_address:
+                    type: string
+                    description: bech32 encoded address
+                    example: terravaloper1wg2mlrxdmnnkkykgqg4znky86nyrtc45q7a85l
+                  consensus_pubkey:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      value:
+                        type: string
+                  jailed:
+                    type: boolean
+                  status:
+                    type: integer
+                  tokens:
+                    type: string
+                  delegator_shares:
+                    type: string
+                  description:
+                    type: object
+                    properties:
+                      moniker:
+                        type: string
+                      identity:
+                        type: string
+                      website:
+                        type: string
+                      security_contact:
+                        type: string
+                      details:
+                        type: string
+                  bond_height:
+                    type: string
+                    example: '0'
+                  bond_intra_tx_counter:
+                    type: integer
+                    example: 0
+                  unbonding_height:
+                    type: string
+                    example: '0'
+                  unbonding_time:
+                    type: string
+                    example: '1970-01-01T00:00:00Z'
+                  commission:
+                    type: object
+                    properties:
+                      commission_rates:
+                        type: object
+                        properties:
+                          rate:
+                            type: string
+                            example: '0'
+                          max_rate:
+                            type: string
+                            example: '0'
+                          max_change_rate:
+                            type: string
+                            example: '0'
+                      update_time:
+                        type: string
+                        example: '1970-01-01T00:00:00Z'
+        '400':
+          description: Invalid validator address
+        '500':
+          description: Internal Server Error
+      parameters:
+        - in: path
+          name: validatorAddr
+          description: Bech32 OperatorAddress of validator
+          required: true
+          type: string
+          x-example: terravaloper1wg2mlrxdmnnkkykgqg4znky86nyrtc45q7a85l
+```

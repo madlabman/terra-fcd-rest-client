@@ -433,17 +433,8 @@ swagger:model GetStakingValidatorsValidatorAddrOKBodyResultCommission
 */
 type GetStakingValidatorsValidatorAddrOKBodyResultCommission struct {
 
-	// max change rate
-	// Example: 0
-	MaxChangeRate string `json:"max_change_rate,omitempty"`
-
-	// max rate
-	// Example: 0
-	MaxRate string `json:"max_rate,omitempty"`
-
-	// rate
-	// Example: 0
-	Rate string `json:"rate,omitempty"`
+	// commission rates
+	CommissionRates *GetStakingValidatorsValidatorAddrOKBodyResultCommissionCommissionRates `json:"commission_rates,omitempty"`
 
 	// update time
 	// Example: 1970-01-01T00:00:00Z
@@ -452,11 +443,64 @@ type GetStakingValidatorsValidatorAddrOKBodyResultCommission struct {
 
 // Validate validates this get staking validators validator addr o k body result commission
 func (o *GetStakingValidatorsValidatorAddrOKBodyResultCommission) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateCommissionRates(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
 	return nil
 }
 
-// ContextValidate validates this get staking validators validator addr o k body result commission based on context it is used
+func (o *GetStakingValidatorsValidatorAddrOKBodyResultCommission) validateCommissionRates(formats strfmt.Registry) error {
+	if swag.IsZero(o.CommissionRates) { // not required
+		return nil
+	}
+
+	if o.CommissionRates != nil {
+		if err := o.CommissionRates.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getStakingValidatorsValidatorAddrOK" + "." + "result" + "." + "commission" + "." + "commission_rates")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getStakingValidatorsValidatorAddrOK" + "." + "result" + "." + "commission" + "." + "commission_rates")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get staking validators validator addr o k body result commission based on the context it is used
 func (o *GetStakingValidatorsValidatorAddrOKBodyResultCommission) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateCommissionRates(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetStakingValidatorsValidatorAddrOKBodyResultCommission) contextValidateCommissionRates(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.CommissionRates != nil {
+		if err := o.CommissionRates.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("getStakingValidatorsValidatorAddrOK" + "." + "result" + "." + "commission" + "." + "commission_rates")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("getStakingValidatorsValidatorAddrOK" + "." + "result" + "." + "commission" + "." + "commission_rates")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -471,6 +515,52 @@ func (o *GetStakingValidatorsValidatorAddrOKBodyResultCommission) MarshalBinary(
 // UnmarshalBinary interface implementation
 func (o *GetStakingValidatorsValidatorAddrOKBodyResultCommission) UnmarshalBinary(b []byte) error {
 	var res GetStakingValidatorsValidatorAddrOKBodyResultCommission
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*GetStakingValidatorsValidatorAddrOKBodyResultCommissionCommissionRates get staking validators validator addr o k body result commission commission rates
+swagger:model GetStakingValidatorsValidatorAddrOKBodyResultCommissionCommissionRates
+*/
+type GetStakingValidatorsValidatorAddrOKBodyResultCommissionCommissionRates struct {
+
+	// max change rate
+	// Example: 0
+	MaxChangeRate string `json:"max_change_rate,omitempty"`
+
+	// max rate
+	// Example: 0
+	MaxRate string `json:"max_rate,omitempty"`
+
+	// rate
+	// Example: 0
+	Rate string `json:"rate,omitempty"`
+}
+
+// Validate validates this get staking validators validator addr o k body result commission commission rates
+func (o *GetStakingValidatorsValidatorAddrOKBodyResultCommissionCommissionRates) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get staking validators validator addr o k body result commission commission rates based on context it is used
+func (o *GetStakingValidatorsValidatorAddrOKBodyResultCommissionCommissionRates) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetStakingValidatorsValidatorAddrOKBodyResultCommissionCommissionRates) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetStakingValidatorsValidatorAddrOKBodyResultCommissionCommissionRates) UnmarshalBinary(b []byte) error {
+	var res GetStakingValidatorsValidatorAddrOKBodyResultCommissionCommissionRates
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

@@ -22733,7 +22733,6 @@ definitions:
       - description
       - deposit
       - vote
-      - validatorsNotVoted
   getProposalResult.proposer:
     properties:
       accountAddress:
@@ -28149,15 +28148,18 @@ paths:
                   commission:
                     type: object
                     properties:
-                      rate:
-                        type: string
-                        example: '0'
-                      max_rate:
-                        type: string
-                        example: '0'
-                      max_change_rate:
-                        type: string
-                        example: '0'
+                      commission_rates:
+                        type: object
+                        properties:
+                          rate:
+                            type: string
+                            example: '0'
+                          max_rate:
+                            type: string
+                            example: '0'
+                          max_change_rate:
+                            type: string
+                            example: '0'
                       update_time:
                         type: string
                         example: '1970-01-01T00:00:00Z'

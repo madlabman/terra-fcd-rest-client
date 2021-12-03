@@ -53,7 +53,6 @@ type GetProposalResult struct {
 	Type *string `json:"type"`
 
 	// validators not voted
-	// Required: true
 	ValidatorsNotVoted []*GetProposalResultValidatorsNotVoted `json:"validatorsNotVoted"`
 
 	// vote
@@ -206,9 +205,8 @@ func (m *GetProposalResult) validateType(formats strfmt.Registry) error {
 }
 
 func (m *GetProposalResult) validateValidatorsNotVoted(formats strfmt.Registry) error {
-
-	if err := validate.Required("validatorsNotVoted", "body", m.ValidatorsNotVoted); err != nil {
-		return err
+	if swag.IsZero(m.ValidatorsNotVoted) { // not required
+		return nil
 	}
 
 	for i := 0; i < len(m.ValidatorsNotVoted); i++ {
