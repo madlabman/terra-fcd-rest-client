@@ -2,9 +2,9 @@
 
 A library with Terra FCD REST client generated using the official swagger documentation.
 
-## v5
+## columbus-5
 
-The v5 folder corresponds to the client and models generated using the columbus-5 swagger specification with a couple of specification mistake fixes.
+The columbus-5 folder corresponds to the client and models generated using the columbus-5 swagger specification with a couple of specification mistake fixes.
 
 ### List of specification fixes
 
