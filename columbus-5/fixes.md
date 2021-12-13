@@ -1551,3 +1551,228 @@ Fixed:
           type: string
           x-example: terravaloper1wg2mlrxdmnnkkykgqg4znky86nyrtc45q7a85l
 ```
+---
+Official:
+```yaml
+/blocks/latest:
+    get:
+      summary: Get the latest block
+      tags:
+        - Tendermint RPC
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: The latest block
+          schema:
+            type: object
+            properties:
+            ...
+            ...
+            ...
+            last_commit:
+                    type: object
+                    properties:
+                      block_id:
+                        type: object
+                        properties:
+                          hash:
+                            type: string
+                            example: EE5F3404034C524501629B56E0DDC38FAD651F04
+                          parts:
+                            type: object
+                            properties:
+                              total:
+                                type: number
+                                example: 0
+                              hash:
+                                type: string
+                                example: EE5F3404034C524501629B56E0DDC38FAD651F04
+                      precommits:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            validator_address:
+                              type: string
+                            validator_index:
+                              type: string
+                              example: '0'
+                            height:
+                              type: string
+                              example: '0'
+                            round:
+                              type: string
+                              example: '0'
+                            timestamp:
+                              type: string
+                              example: '2017-12-30T05:53:09.287+01:00'
+                            type:
+                              type: number
+                              example: 2
+                            block_id:
+                              type: object
+                              properties:
+                                hash:
+                                  type: string
+                                  example: EE5F3404034C524501629B56E0DDC38FAD651F04
+                                parts:
+                                  type: object
+                                  properties:
+                                    total:
+                                      type: number
+                                      example: 0
+                                    hash:
+                                      type: string
+                                      example: EE5F3404034C524501629B56E0DDC38FAD651F04
+                            signature:
+                              type: string
+                              example: >-
+                                7uTC74QlknqYWEwg7Vn6M8Om7FuZ0EO4bjvuj6rwH1mTUJrRuMMZvAAqT9VjNgP0RA/TDp6u/92AqrZfXJSpBQ==
+```
+
+Fixed:
+```yaml
+/blocks/latest:
+    get:
+      summary: Get the latest block
+      tags:
+        - Tendermint RPC
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: The latest block
+          schema:
+            type: object
+            properties:
+            ...
+            ...
+            ...
+            last_commit:
+                    type: object
+                    properties:
+                      height:
+                        type: string
+                        example: '0'
+                      round:
+                        type: number
+                        example: 0
+                      block_id:
+                        type: object
+                        properties:
+                          hash:
+                            type: string
+                            example: EE5F3404034C524501629B56E0DDC38FAD651F04
+                          parts:
+                            type: object
+                            properties:
+                              total:
+                                type: number
+                                example: 0
+                              hash:
+                                type: string
+                                example: EE5F3404034C524501629B56E0DDC38FAD651F04
+                      signatures:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            validator_address:
+                              type: string
+                            timestamp:
+                              type: string
+                              example: "2017-12-30T05:53:09.287+01:00"
+                            signature:
+                              type: string
+                              example: "7uTC74QlknqYWEwg7Vn6M8Om7FuZ0EO4bjvuj6rwH1mTUJrRuMMZvAAqT9VjNgP0RA/TDp6u/92AqrZfXJSpBQ=="
+                            block_id_flag:
+                              type: integer
+```
+---
+Official:
+```yaml
+  '/bank/balances/{address}':
+    get:
+      deprecated: true
+      summary: Get the account balances
+      tags:
+        - Bank
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: address
+          description: Account address in bech32 format
+          required: true
+          type: string
+          x-example: terra1wg2mlrxdmnnkkykgqg4znky86nyrtc45q336yv
+      responses:
+        '200':
+          description: Account balances
+          schema:
+            type: object
+            properties:
+              height:
+                type: string
+              result:
+                type: object
+                properties:
+                  denom:
+                    type: string
+                    example: uluna
+                  amount:
+                    type: string
+                    example: "50"
+```
+
+Fixed:
+```yaml
+  '/bank/balances/{address}':
+    get:
+      deprecated: true
+      summary: Get the account balances
+      tags:
+        - Bank
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: address
+          description: Account address in bech32 format
+          required: true
+          type: string
+          x-example: terra1wg2mlrxdmnnkkykgqg4znky86nyrtc45q336yv
+      responses:
+        '200':
+          description: Account balances
+          schema:
+            type: object
+            properties:
+              height:
+                type: string
+              result:
+                type: array
+                items: 
+                  type: object
+                  properties:
+                    denom:
+                      type: string
+                      example: uluna
+                    amount:
+                      type: string
+                      example: "50"
+```
+---
+
+### Fix description template
+Official:
+```yaml
+
+```
+
+Fixed:
+```yaml
+
+```
+---

@@ -25739,6 +25739,12 @@ paths:
                   last_commit:
                     type: object
                     properties:
+                      height:
+                        type: string
+                        example: '0'
+                      round:
+                        type: number
+                        example: 0
                       block_id:
                         type: object
                         properties:
@@ -25754,47 +25760,21 @@ paths:
                               hash:
                                 type: string
                                 example: EE5F3404034C524501629B56E0DDC38FAD651F04
-                      precommits:
+                      signatures:
                         type: array
                         items:
                           type: object
                           properties:
                             validator_address:
                               type: string
-                            validator_index:
-                              type: string
-                              example: '0'
-                            height:
-                              type: string
-                              example: '0'
-                            round:
-                              type: string
-                              example: '0'
                             timestamp:
                               type: string
-                              example: '2017-12-30T05:53:09.287+01:00'
-                            type:
-                              type: number
-                              example: 2
-                            block_id:
-                              type: object
-                              properties:
-                                hash:
-                                  type: string
-                                  example: EE5F3404034C524501629B56E0DDC38FAD651F04
-                                parts:
-                                  type: object
-                                  properties:
-                                    total:
-                                      type: number
-                                      example: 0
-                                    hash:
-                                      type: string
-                                      example: EE5F3404034C524501629B56E0DDC38FAD651F04
+                              example: "2017-12-30T05:53:09.287+01:00"
                             signature:
                               type: string
-                              example: >-
-                                7uTC74QlknqYWEwg7Vn6M8Om7FuZ0EO4bjvuj6rwH1mTUJrRuMMZvAAqT9VjNgP0RA/TDp6u/92AqrZfXJSpBQ==
+                              example: "7uTC74QlknqYWEwg7Vn6M8Om7FuZ0EO4bjvuj6rwH1mTUJrRuMMZvAAqT9VjNgP0RA/TDp6u/92AqrZfXJSpBQ=="
+                            block_id_flag:
+                              type: integer
         '500':
           description: Server internal error
   '/blocks/{height}':
@@ -26834,14 +26814,16 @@ paths:
               height:
                 type: string
               result:
-                type: object
-                properties:
-                  denom:
-                    type: string
-                    example: uluna
-                  amount:
-                    type: string
-                    example: "50"
+                type: array
+                items: 
+                  type: object
+                  properties:
+                    denom:
+                      type: string
+                      example: uluna
+                    amount:
+                      type: string
+                      example: "50"
         '500':
           description: Server internal error
   '/bank/accounts/{address}/transfers':
