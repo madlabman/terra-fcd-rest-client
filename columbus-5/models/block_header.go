@@ -40,10 +40,10 @@ type BlockHeader struct {
 
 	// height
 	// Example: 1
-	Height float64 `json:"height,omitempty"`
+	Height string `json:"height,omitempty"`
 
 	// last block id
-	LastBlockID *BlockHeaderLastBlockID `json:"last_block_id,omitempty"`
+	LastBlockID *BlockID `json:"last_block_id,omitempty"`
 
 	// last commit hash
 	// Example: EE5F3404034C524501629B56E0DDC38FAD651F04
@@ -57,10 +57,6 @@ type BlockHeader struct {
 	// Example: EE5F3404034C524501629B56E0DDC38FAD651F04
 	NextValidatorsHash string `json:"next_validators_hash,omitempty"`
 
-	// num txs
-	// Example: 0
-	NumTxs float64 `json:"num_txs,omitempty"`
-
 	// bech32 encoded address
 	// Example: terra1wg2mlrxdmnnkkykgqg4znky86nyrtc45q336yv
 	ProposerAddress string `json:"proposer_address,omitempty"`
@@ -68,10 +64,6 @@ type BlockHeader struct {
 	// time
 	// Example: 2017-12-30T05:53:09.287+01:00
 	Time string `json:"time,omitempty"`
-
-	// total txs
-	// Example: 35
-	TotalTxs float64 `json:"total_txs,omitempty"`
 
 	// validators hash
 	// Example: EE5F3404034C524501629B56E0DDC38FAD651F04
@@ -198,142 +190,6 @@ func (m *BlockHeader) MarshalBinary() ([]byte, error) {
 // UnmarshalBinary interface implementation
 func (m *BlockHeader) UnmarshalBinary(b []byte) error {
 	var res BlockHeader
-	if err := swag.ReadJSON(b, &res); err != nil {
-		return err
-	}
-	*m = res
-	return nil
-}
-
-// BlockHeaderLastBlockID block header last block ID
-//
-// swagger:model BlockHeaderLastBlockID
-type BlockHeaderLastBlockID struct {
-
-	// hash
-	// Example: EE5F3404034C524501629B56E0DDC38FAD651F04
-	Hash string `json:"hash,omitempty"`
-
-	// parts
-	Parts *BlockHeaderLastBlockIDParts `json:"parts,omitempty"`
-}
-
-// Validate validates this block header last block ID
-func (m *BlockHeaderLastBlockID) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateParts(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *BlockHeaderLastBlockID) validateParts(formats strfmt.Registry) error {
-	if swag.IsZero(m.Parts) { // not required
-		return nil
-	}
-
-	if m.Parts != nil {
-		if err := m.Parts.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("last_block_id" + "." + "parts")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("last_block_id" + "." + "parts")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-// ContextValidate validate this block header last block ID based on the context it is used
-func (m *BlockHeaderLastBlockID) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateParts(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *BlockHeaderLastBlockID) contextValidateParts(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.Parts != nil {
-		if err := m.Parts.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("last_block_id" + "." + "parts")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("last_block_id" + "." + "parts")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-// MarshalBinary interface implementation
-func (m *BlockHeaderLastBlockID) MarshalBinary() ([]byte, error) {
-	if m == nil {
-		return nil, nil
-	}
-	return swag.WriteJSON(m)
-}
-
-// UnmarshalBinary interface implementation
-func (m *BlockHeaderLastBlockID) UnmarshalBinary(b []byte) error {
-	var res BlockHeaderLastBlockID
-	if err := swag.ReadJSON(b, &res); err != nil {
-		return err
-	}
-	*m = res
-	return nil
-}
-
-// BlockHeaderLastBlockIDParts block header last block ID parts
-//
-// swagger:model BlockHeaderLastBlockIDParts
-type BlockHeaderLastBlockIDParts struct {
-
-	// hash
-	// Example: EE5F3404034C524501629B56E0DDC38FAD651F04
-	Hash string `json:"hash,omitempty"`
-
-	// total
-	// Example: 0
-	Total float64 `json:"total,omitempty"`
-}
-
-// Validate validates this block header last block ID parts
-func (m *BlockHeaderLastBlockIDParts) Validate(formats strfmt.Registry) error {
-	return nil
-}
-
-// ContextValidate validates this block header last block ID parts based on context it is used
-func (m *BlockHeaderLastBlockIDParts) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	return nil
-}
-
-// MarshalBinary interface implementation
-func (m *BlockHeaderLastBlockIDParts) MarshalBinary() ([]byte, error) {
-	if m == nil {
-		return nil, nil
-	}
-	return swag.WriteJSON(m)
-}
-
-// UnmarshalBinary interface implementation
-func (m *BlockHeaderLastBlockIDParts) UnmarshalBinary(b []byte) error {
-	var res BlockHeaderLastBlockIDParts
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

@@ -64,7 +64,7 @@ type GetBlocksHeightParams struct {
 
 	   Block height
 	*/
-	Height float64
+	Height int64
 
 	timeout    time.Duration
 	Context    context.Context
@@ -120,13 +120,13 @@ func (o *GetBlocksHeightParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithHeight adds the height to the get blocks height params
-func (o *GetBlocksHeightParams) WithHeight(height float64) *GetBlocksHeightParams {
+func (o *GetBlocksHeightParams) WithHeight(height int64) *GetBlocksHeightParams {
 	o.SetHeight(height)
 	return o
 }
 
 // SetHeight adds the height to the get blocks height params
-func (o *GetBlocksHeightParams) SetHeight(height float64) {
+func (o *GetBlocksHeightParams) SetHeight(height int64) {
 	o.Height = height
 }
 
@@ -139,7 +139,7 @@ func (o *GetBlocksHeightParams) WriteToRequest(r runtime.ClientRequest, reg strf
 	var res []error
 
 	// path param height
-	if err := r.SetPathParam("height", swag.FormatFloat64(o.Height)); err != nil {
+	if err := r.SetPathParam("height", swag.FormatInt64(o.Height)); err != nil {
 		return err
 	}
 
