@@ -480,7 +480,7 @@ Fixed:
         - name: offset
           in: query
           required: false
-          type: number
+          type: integer
           description: Use last id from previous result for pagination
         - name: page
           in: query
@@ -517,187 +517,6 @@ Fixed:
           description: Success
           schema:
             $ref: '#/definitions/postTxsResult'
-```
----
-Official:
-```yaml
-  '/staking/validators/{validatorAddr}':
-    get:
-      deprecated: true
-      summary: Query the information from a single validator
-      tags:
-        - Staking
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: object
-            properties:
-              operator_address:
-                type: string
-                description: bech32 encoded address
-                example: terravaloper1wg2mlrxdmnnkkykgqg4znky86nyrtc45q7a85l
-              consensus_pubkey:
-                type: object
-                properties:
-                  type:
-                    type: string
-                  value:
-                    type: string
-              jailed:
-                type: boolean
-              status:
-                type: integer
-              tokens:
-                type: string
-              delegator_shares:
-                type: string
-              description:
-                type: object
-                properties:
-                  moniker:
-                    type: string
-                  identity:
-                    type: string
-                  website:
-                    type: string
-                  security_contact:
-                    type: string
-                  details:
-                    type: string
-              bond_height:
-                type: string
-                example: '0'
-              bond_intra_tx_counter:
-                type: integer
-                example: 0
-              unbonding_height:
-                type: string
-                example: '0'
-              unbonding_time:
-                type: string
-                example: '1970-01-01T00:00:00Z'
-              commission:
-                type: object
-                properties:
-                  rate:
-                    type: string
-                    example: '0'
-                  max_rate:
-                    type: string
-                    example: '0'
-                  max_change_rate:
-                    type: string
-                    example: '0'
-                  update_time:
-                    type: string
-                    example: '1970-01-01T00:00:00Z'
-        '400':
-          description: Invalid validator address
-        '500':
-          description: Internal Server Error
-      parameters:
-        - in: path
-          name: validatorAddr
-          description: Bech32 OperatorAddress of validator
-          required: true
-          type: string
-          x-example: terravaloper1wg2mlrxdmnnkkykgqg4znky86nyrtc45q7a85l
-```
-
-Fixed:
-```yaml
-  '/staking/validators/{validatorAddr}':
-    get:
-      deprecated: true
-      summary: Query the information from a single validator
-      tags:
-        - Staking
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: OK
-          schema:
-            type: object
-            properties:
-              height:
-                type: string
-              result:
-                type: object
-                properties:
-                  operator_address:
-                    type: string
-                    description: bech32 encoded address
-                    example: terravaloper1wg2mlrxdmnnkkykgqg4znky86nyrtc45q7a85l
-                  consensus_pubkey:
-                    type: object
-                    properties:
-                      type:
-                        type: string
-                      value:
-                        type: string
-                  jailed:
-                    type: boolean
-                  status:
-                    type: integer
-                  tokens:
-                    type: string
-                  delegator_shares:
-                    type: string
-                  description:
-                    type: object
-                    properties:
-                      moniker:
-                        type: string
-                      identity:
-                        type: string
-                      website:
-                        type: string
-                      security_contact:
-                        type: string
-                      details:
-                        type: string
-                  bond_height:
-                    type: string
-                    example: '0'
-                  bond_intra_tx_counter:
-                    type: integer
-                    example: 0
-                  unbonding_height:
-                    type: string
-                    example: '0'
-                  unbonding_time:
-                    type: string
-                    example: '1970-01-01T00:00:00Z'
-                  commission:
-                    type: object
-                    properties:
-                      rate:
-                        type: string
-                        example: '0'
-                      max_rate:
-                        type: string
-                        example: '0'
-                      max_change_rate:
-                        type: string
-                        example: '0'
-                      update_time:
-                        type: string
-                        example: '1970-01-01T00:00:00Z'
-        '400':
-          description: Invalid validator address
-        '500':
-          description: Internal Server Error
-      parameters:
-        - in: path
-          name: validatorAddr
-          description: Bech32 OperatorAddress of validator
-          required: true
-          type: string
-          x-example: terravaloper1wg2mlrxdmnnkkykgqg4znky86nyrtc45q7a85l
 ```
 ---
 Official:
@@ -836,79 +655,6 @@ Fixed:
           description: Bad Request
         '500':
           description: Internal Server Error
-```
----
-Official:
-```yaml
-  '/bank/balances/{address}':
-    get:
-      deprecated: true
-      summary: Get the account balances
-      tags:
-        - Bank
-      produces:
-        - application/json
-      parameters:
-        - in: path
-          name: address
-          description: Account address in bech32 format
-          required: true
-          type: string
-          x-example: terra1wg2mlrxdmnnkkykgqg4znky86nyrtc45q336yv
-      responses:
-        '200':
-          description: Account balances
-          schema:
-            type: array
-            items:
-              type: object
-              properties:
-                denom:
-                  type: string
-                  example: uluna
-                amount:
-                  type: string
-                  example: '50'
-        '500':
-          description: Server internal error
-```
-
-Fixed:
-```yaml
-  '/bank/balances/{address}':
-    get:
-      deprecated: true
-      summary: Get the account balances
-      tags:
-        - Bank
-      produces:
-        - application/json
-      parameters:
-        - in: path
-          name: address
-          description: Account address in bech32 format
-          required: true
-          type: string
-          x-example: terra1wg2mlrxdmnnkkykgqg4znky86nyrtc45q336yv
-      responses:
-        '200':
-          description: Account balances
-          schema:
-            type: object
-            properties:
-              height:
-                type: string
-              result:
-                type: object
-                properties:
-                  denom:
-                    type: string
-                    example: uluna
-                  amount:
-                    type: string
-                    example: "50"
-        '500':
-          description: Server internal error
 ```
 ---
 Official:
@@ -1554,144 +1300,6 @@ Fixed:
 ---
 Official:
 ```yaml
-/blocks/latest:
-    get:
-      summary: Get the latest block
-      tags:
-        - Tendermint RPC
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: The latest block
-          schema:
-            type: object
-            properties:
-            ...
-            ...
-            ...
-            last_commit:
-                    type: object
-                    properties:
-                      block_id:
-                        type: object
-                        properties:
-                          hash:
-                            type: string
-                            example: EE5F3404034C524501629B56E0DDC38FAD651F04
-                          parts:
-                            type: object
-                            properties:
-                              total:
-                                type: number
-                                example: 0
-                              hash:
-                                type: string
-                                example: EE5F3404034C524501629B56E0DDC38FAD651F04
-                      precommits:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            validator_address:
-                              type: string
-                            validator_index:
-                              type: string
-                              example: '0'
-                            height:
-                              type: string
-                              example: '0'
-                            round:
-                              type: string
-                              example: '0'
-                            timestamp:
-                              type: string
-                              example: '2017-12-30T05:53:09.287+01:00'
-                            type:
-                              type: number
-                              example: 2
-                            block_id:
-                              type: object
-                              properties:
-                                hash:
-                                  type: string
-                                  example: EE5F3404034C524501629B56E0DDC38FAD651F04
-                                parts:
-                                  type: object
-                                  properties:
-                                    total:
-                                      type: number
-                                      example: 0
-                                    hash:
-                                      type: string
-                                      example: EE5F3404034C524501629B56E0DDC38FAD651F04
-                            signature:
-                              type: string
-                              example: >-
-                                7uTC74QlknqYWEwg7Vn6M8Om7FuZ0EO4bjvuj6rwH1mTUJrRuMMZvAAqT9VjNgP0RA/TDp6u/92AqrZfXJSpBQ==
-```
-
-Fixed:
-```yaml
-/blocks/latest:
-    get:
-      summary: Get the latest block
-      tags:
-        - Tendermint RPC
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: The latest block
-          schema:
-            type: object
-            properties:
-            ...
-            ...
-            ...
-            last_commit:
-                    type: object
-                    properties:
-                      height:
-                        type: string
-                        example: '0'
-                      round:
-                        type: number
-                        example: 0
-                      block_id:
-                        type: object
-                        properties:
-                          hash:
-                            type: string
-                            example: EE5F3404034C524501629B56E0DDC38FAD651F04
-                          parts:
-                            type: object
-                            properties:
-                              total:
-                                type: number
-                                example: 0
-                              hash:
-                                type: string
-                                example: EE5F3404034C524501629B56E0DDC38FAD651F04
-                      signatures:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            validator_address:
-                              type: string
-                            timestamp:
-                              type: string
-                              example: "2017-12-30T05:53:09.287+01:00"
-                            signature:
-                              type: string
-                              example: "7uTC74QlknqYWEwg7Vn6M8Om7FuZ0EO4bjvuj6rwH1mTUJrRuMMZvAAqT9VjNgP0RA/TDp6u/92AqrZfXJSpBQ=="
-                            block_id_flag:
-                              type: integer
-```
----
-Official:
-```yaml
   '/bank/balances/{address}':
     get:
       deprecated: true
@@ -1762,6 +1370,410 @@ Fixed:
                     amount:
                       type: string
                       example: "50"
+```
+---
+Official:
+```yaml
+  /blocks/latest:
+    get:
+      summary: Get the latest block
+      tags:
+        - Tendermint RPC
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: The latest block
+          schema:
+            type: object
+            properties:
+              a lot of properties...
+```
+
+Fixed:
+```yaml
+  /blocks/latest:
+    get:
+      summary: Get the latest block
+      tags:
+        - Tendermint RPC
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: The latest block
+          schema:
+            $ref: "#/definitions/BlockQuery"
+```
+---
+Official:
+```yaml
+  '/blocks/{height}':
+    get:
+      summary: Get a block at a certain height
+      tags:
+        - Tendermint RPC
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: height
+          description: Block height
+          required: true
+          type: number
+          x-example: 1
+      responses:
+        '200':
+          description: The block at a specific height
+          schema:
+            type: object
+            properties:
+              a lot of properties...
+```
+
+Fixed:
+```yaml
+  '/blocks/{height}':
+    get:
+      summary: Get a block at a certain height
+      tags:
+        - Tendermint RPC
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: height
+          description: Block height
+          required: true
+          type: integer
+          x-example: 1
+      responses:
+        '200':
+          description: The block at a specific height
+          schema:
+            $ref: "#/definitions/BlockQuery"
+```
+---
+Official:
+```yaml
+  Block:
+    type: object
+    properties:
+      header:
+        type: object
+        properties:
+          chain_id:
+            type: string
+            example: columbus-5
+          height:
+            type: number
+            example: 1
+          time:
+            type: string
+            example: '2017-12-30T05:53:09.287+01:00'
+          num_txs:
+            type: number
+            example: 0
+          last_block_id:
+            type: object
+            properties:
+              hash:
+                type: string
+                example: EE5F3404034C524501629B56E0DDC38FAD651F04
+              parts:
+                type: object
+                properties:
+                  total:
+                    type: number
+                    example: 0
+                  hash:
+                    type: string
+                    example: EE5F3404034C524501629B56E0DDC38FAD651F04
+          total_txs:
+            type: number
+            example: 35
+          last_commit_hash:
+            type: string
+            example: EE5F3404034C524501629B56E0DDC38FAD651F04
+          data_hash:
+            type: string
+            example: EE5F3404034C524501629B56E0DDC38FAD651F04
+          validators_hash:
+            type: string
+            example: EE5F3404034C524501629B56E0DDC38FAD651F04
+          next_validators_hash:
+            type: string
+            example: EE5F3404034C524501629B56E0DDC38FAD651F04
+          consensus_hash:
+            type: string
+            example: EE5F3404034C524501629B56E0DDC38FAD651F04
+          app_hash:
+            type: string
+            example: EE5F3404034C524501629B56E0DDC38FAD651F04
+          last_results_hash:
+            type: string
+            example: EE5F3404034C524501629B56E0DDC38FAD651F04
+          evidence_hash:
+            type: string
+            example: EE5F3404034C524501629B56E0DDC38FAD651F04
+          proposer_address:
+            type: string
+            description: bech32 encoded address
+            example: terra1wg2mlrxdmnnkkykgqg4znky86nyrtc45q336yv
+          version:
+            type: object
+            properties:
+              block:
+                type: string
+                example: 10
+              app:
+                type: string
+                example: 0
+      txs:
+        type: array
+        items:
+          type: string
+      evidence:
+        type: array
+        items:
+          type: string
+      last_commit:
+        type: object
+        properties:
+          block_id:
+            type: object
+            properties:
+              hash:
+                type: string
+                example: EE5F3404034C524501629B56E0DDC38FAD651F04
+              parts:
+                type: object
+                properties:
+                  total:
+                    type: number
+                    example: 0
+                  hash:
+                    type: string
+                    example: EE5F3404034C524501629B56E0DDC38FAD651F04
+          precommits:
+            type: array
+            items:
+              type: object
+              properties:
+                validator_address:
+                  type: string
+                validator_index:
+                  type: string
+                  example: '0'
+                height:
+                  type: string
+                  example: '0'
+                round:
+                  type: string
+                  example: '0'
+                timestamp:
+                  type: string
+                  example: '2017-12-30T05:53:09.287+01:00'
+                type:
+                  type: number
+                  example: 2
+                block_id:
+                  type: object
+                  properties:
+                    hash:
+                      type: string
+                      example: EE5F3404034C524501629B56E0DDC38FAD651F04
+                    parts:
+                      type: object
+                      properties:
+                        total:
+                          type: number
+                          example: 0
+                        hash:
+                          type: string
+                          example: EE5F3404034C524501629B56E0DDC38FAD651F04
+                signature:
+                  type: string
+                  example: >-
+                    7uTC74QlknqYWEwg7Vn6M8Om7FuZ0EO4bjvuj6rwH1mTUJrRuMMZvAAqT9VjNgP0RA/TDp6u/92AqrZfXJSpBQ==
+```
+
+Fixed:
+```yaml
+  Block:
+    type: object
+    properties:
+      header:
+        $ref: "#/definitions/BlockHeader"
+      data:
+        type: object
+        properties:
+          txs:
+            type: array
+            items:
+              type: string
+      evidence:
+        type: object
+        properties:
+          evidence:
+            type: array
+            items:
+              type: string
+      last_commit:
+        type: object
+        properties:
+          height:
+            type: string
+            example: '0'
+          round:
+            type: number
+            example: 0
+          block_id:
+            $ref: "#/definitions/BlockID"
+          signatures:
+            type: array
+            items:
+              type: object
+              properties:
+                validator_address:
+                  type: string
+                timestamp:
+                  type: string
+                  example: "2017-12-30T05:53:09.287+01:00"
+                signature:
+                  type: string
+                  example: "7uTC74QlknqYWEwg7Vn6M8Om7FuZ0EO4bjvuj6rwH1mTUJrRuMMZvAAqT9VjNgP0RA/TDp6u/92AqrZfXJSpBQ=="
+                block_id_flag:
+                  type: integer
+```
+---
+Official:
+```yaml
+  BlockHeader:
+    type: object
+    properties:
+      chain_id:
+        type: string
+        example: columbus-5
+      height:
+        type: number
+        example: 1
+      time:
+        type: string
+        example: '2017-12-30T05:53:09.287+01:00'
+      num_txs:
+        type: number
+        example: 0
+      last_block_id:
+        type: object
+        properties:
+          hash:
+            type: string
+            example: EE5F3404034C524501629B56E0DDC38FAD651F04
+          parts:
+            type: object
+            properties:
+              total:
+                type: number
+                example: 0
+              hash:
+                type: string
+                example: EE5F3404034C524501629B56E0DDC38FAD651F04
+      total_txs:
+        type: number
+        example: 35
+      last_commit_hash:
+        type: string
+        example: EE5F3404034C524501629B56E0DDC38FAD651F04
+      data_hash:
+        type: string
+        example: EE5F3404034C524501629B56E0DDC38FAD651F04
+      validators_hash:
+        type: string
+        example: EE5F3404034C524501629B56E0DDC38FAD651F04
+      next_validators_hash:
+        type: string
+        example: EE5F3404034C524501629B56E0DDC38FAD651F04
+      consensus_hash:
+        type: string
+        example: EE5F3404034C524501629B56E0DDC38FAD651F04
+      app_hash:
+        type: string
+        example: EE5F3404034C524501629B56E0DDC38FAD651F04
+      last_results_hash:
+        type: string
+        example: EE5F3404034C524501629B56E0DDC38FAD651F04
+      evidence_hash:
+        type: string
+        example: EE5F3404034C524501629B56E0DDC38FAD651F04
+      proposer_address:
+        type: string
+        description: bech32 encoded address
+        example: terra1wg2mlrxdmnnkkykgqg4znky86nyrtc45q336yv
+      version:
+        type: object
+        properties:
+          block:
+            type: string
+            example: 10
+          app:
+            type: string
+            example: 0
+```
+
+Fixed:
+```yaml
+  BlockHeader:
+    type: object
+    properties:
+      chain_id:
+        type: string
+        example: columbus-5
+      height:
+        type: string
+        example: '1'
+      time:
+        type: string
+        example: '2017-12-30T05:53:09.287+01:00'
+      last_block_id:
+        $ref: "#/definitions/BlockID"
+      last_commit_hash:
+        type: string
+        example: EE5F3404034C524501629B56E0DDC38FAD651F04
+      data_hash:
+        type: string
+        example: EE5F3404034C524501629B56E0DDC38FAD651F04
+      validators_hash:
+        type: string
+        example: EE5F3404034C524501629B56E0DDC38FAD651F04
+      next_validators_hash:
+        type: string
+        example: EE5F3404034C524501629B56E0DDC38FAD651F04
+      consensus_hash:
+        type: string
+        example: EE5F3404034C524501629B56E0DDC38FAD651F04
+      app_hash:
+        type: string
+        example: EE5F3404034C524501629B56E0DDC38FAD651F04
+      last_results_hash:
+        type: string
+        example: EE5F3404034C524501629B56E0DDC38FAD651F04
+      evidence_hash:
+        type: string
+        example: EE5F3404034C524501629B56E0DDC38FAD651F04
+      proposer_address:
+        type: string
+        description: bech32 encoded address
+        example: terra1wg2mlrxdmnnkkykgqg4znky86nyrtc45q336yv
+      version:
+        type: object
+        properties:
+          block:
+            type: string
+            example: 10
+          app:
+            type: string
+            example: 0
 ```
 ---
 
