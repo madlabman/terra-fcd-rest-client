@@ -19,22 +19,30 @@ import (
 // swagger:model Block
 type Block struct {
 
+	// data
+	Data *BlockData `json:"data,omitempty"`
+
 	// evidence
-	Evidence []string `json:"evidence"`
+	Evidence *BlockEvidence `json:"evidence,omitempty"`
 
 	// header
 	Header *BlockHeader `json:"header,omitempty"`
 
 	// last commit
 	LastCommit *BlockLastCommit `json:"last_commit,omitempty"`
-
-	// txs
-	Txs []string `json:"txs"`
 }
 
 // Validate validates this block
 func (m *Block) Validate(formats strfmt.Registry) error {
 	var res []error
+
+	if err := m.validateData(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateEvidence(formats); err != nil {
+		res = append(res, err)
+	}
 
 	if err := m.validateHeader(formats); err != nil {
 		res = append(res, err)
@@ -47,6 +55,44 @@ func (m *Block) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *Block) validateData(formats strfmt.Registry) error {
+	if swag.IsZero(m.Data) { // not required
+		return nil
+	}
+
+	if m.Data != nil {
+		if err := m.Data.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("data")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("data")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *Block) validateEvidence(formats strfmt.Registry) error {
+	if swag.IsZero(m.Evidence) { // not required
+		return nil
+	}
+
+	if m.Evidence != nil {
+		if err := m.Evidence.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("evidence")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("evidence")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -92,6 +138,14 @@ func (m *Block) validateLastCommit(formats strfmt.Registry) error {
 func (m *Block) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.contextValidateData(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateEvidence(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateHeader(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -103,6 +157,38 @@ func (m *Block) ContextValidate(ctx context.Context, formats strfmt.Registry) er
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *Block) contextValidateData(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Data != nil {
+		if err := m.Data.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("data")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("data")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *Block) contextValidateEvidence(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Evidence != nil {
+		if err := m.Evidence.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("evidence")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("evidence")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -156,16 +242,98 @@ func (m *Block) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
+// BlockData block data
+//
+// swagger:model BlockData
+type BlockData struct {
+
+	// txs
+	Txs []string `json:"txs"`
+}
+
+// Validate validates this block data
+func (m *BlockData) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this block data based on context it is used
+func (m *BlockData) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (m *BlockData) MarshalBinary() ([]byte, error) {
+	if m == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(m)
+}
+
+// UnmarshalBinary interface implementation
+func (m *BlockData) UnmarshalBinary(b []byte) error {
+	var res BlockData
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*m = res
+	return nil
+}
+
+// BlockEvidence block evidence
+//
+// swagger:model BlockEvidence
+type BlockEvidence struct {
+
+	// evidence
+	Evidence []string `json:"evidence"`
+}
+
+// Validate validates this block evidence
+func (m *BlockEvidence) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this block evidence based on context it is used
+func (m *BlockEvidence) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (m *BlockEvidence) MarshalBinary() ([]byte, error) {
+	if m == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(m)
+}
+
+// UnmarshalBinary interface implementation
+func (m *BlockEvidence) UnmarshalBinary(b []byte) error {
+	var res BlockEvidence
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*m = res
+	return nil
+}
+
 // BlockLastCommit block last commit
 //
 // swagger:model BlockLastCommit
 type BlockLastCommit struct {
 
 	// block id
-	BlockID *BlockLastCommitBlockID `json:"block_id,omitempty"`
+	BlockID *BlockID `json:"block_id,omitempty"`
 
-	// precommits
-	Precommits []*BlockLastCommitPrecommitsItems0 `json:"precommits"`
+	// height
+	// Example: 0
+	Height string `json:"height,omitempty"`
+
+	// round
+	// Example: 0
+	Round float64 `json:"round,omitempty"`
+
+	// signatures
+	Signatures []*BlockLastCommitSignaturesItems0 `json:"signatures"`
 }
 
 // Validate validates this block last commit
@@ -176,7 +344,7 @@ func (m *BlockLastCommit) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validatePrecommits(formats); err != nil {
+	if err := m.validateSignatures(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -205,22 +373,22 @@ func (m *BlockLastCommit) validateBlockID(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *BlockLastCommit) validatePrecommits(formats strfmt.Registry) error {
-	if swag.IsZero(m.Precommits) { // not required
+func (m *BlockLastCommit) validateSignatures(formats strfmt.Registry) error {
+	if swag.IsZero(m.Signatures) { // not required
 		return nil
 	}
 
-	for i := 0; i < len(m.Precommits); i++ {
-		if swag.IsZero(m.Precommits[i]) { // not required
+	for i := 0; i < len(m.Signatures); i++ {
+		if swag.IsZero(m.Signatures[i]) { // not required
 			continue
 		}
 
-		if m.Precommits[i] != nil {
-			if err := m.Precommits[i].Validate(formats); err != nil {
+		if m.Signatures[i] != nil {
+			if err := m.Signatures[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("last_commit" + "." + "precommits" + "." + strconv.Itoa(i))
+					return ve.ValidateName("last_commit" + "." + "signatures" + "." + strconv.Itoa(i))
 				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("last_commit" + "." + "precommits" + "." + strconv.Itoa(i))
+					return ce.ValidateName("last_commit" + "." + "signatures" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -239,7 +407,7 @@ func (m *BlockLastCommit) ContextValidate(ctx context.Context, formats strfmt.Re
 		res = append(res, err)
 	}
 
-	if err := m.contextValidatePrecommits(ctx, formats); err != nil {
+	if err := m.contextValidateSignatures(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -265,16 +433,16 @@ func (m *BlockLastCommit) contextValidateBlockID(ctx context.Context, formats st
 	return nil
 }
 
-func (m *BlockLastCommit) contextValidatePrecommits(ctx context.Context, formats strfmt.Registry) error {
+func (m *BlockLastCommit) contextValidateSignatures(ctx context.Context, formats strfmt.Registry) error {
 
-	for i := 0; i < len(m.Precommits); i++ {
+	for i := 0; i < len(m.Signatures); i++ {
 
-		if m.Precommits[i] != nil {
-			if err := m.Precommits[i].ContextValidate(ctx, formats); err != nil {
+		if m.Signatures[i] != nil {
+			if err := m.Signatures[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("last_commit" + "." + "precommits" + "." + strconv.Itoa(i))
+					return ve.ValidateName("last_commit" + "." + "signatures" + "." + strconv.Itoa(i))
 				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("last_commit" + "." + "precommits" + "." + strconv.Itoa(i))
+					return ce.ValidateName("last_commit" + "." + "signatures" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -303,157 +471,13 @@ func (m *BlockLastCommit) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// BlockLastCommitBlockID block last commit block ID
+// BlockLastCommitSignaturesItems0 block last commit signatures items0
 //
-// swagger:model BlockLastCommitBlockID
-type BlockLastCommitBlockID struct {
+// swagger:model BlockLastCommitSignaturesItems0
+type BlockLastCommitSignaturesItems0 struct {
 
-	// hash
-	// Example: EE5F3404034C524501629B56E0DDC38FAD651F04
-	Hash string `json:"hash,omitempty"`
-
-	// parts
-	Parts *BlockLastCommitBlockIDParts `json:"parts,omitempty"`
-}
-
-// Validate validates this block last commit block ID
-func (m *BlockLastCommitBlockID) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateParts(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *BlockLastCommitBlockID) validateParts(formats strfmt.Registry) error {
-	if swag.IsZero(m.Parts) { // not required
-		return nil
-	}
-
-	if m.Parts != nil {
-		if err := m.Parts.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("last_commit" + "." + "block_id" + "." + "parts")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("last_commit" + "." + "block_id" + "." + "parts")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-// ContextValidate validate this block last commit block ID based on the context it is used
-func (m *BlockLastCommitBlockID) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateParts(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *BlockLastCommitBlockID) contextValidateParts(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.Parts != nil {
-		if err := m.Parts.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("last_commit" + "." + "block_id" + "." + "parts")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("last_commit" + "." + "block_id" + "." + "parts")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-// MarshalBinary interface implementation
-func (m *BlockLastCommitBlockID) MarshalBinary() ([]byte, error) {
-	if m == nil {
-		return nil, nil
-	}
-	return swag.WriteJSON(m)
-}
-
-// UnmarshalBinary interface implementation
-func (m *BlockLastCommitBlockID) UnmarshalBinary(b []byte) error {
-	var res BlockLastCommitBlockID
-	if err := swag.ReadJSON(b, &res); err != nil {
-		return err
-	}
-	*m = res
-	return nil
-}
-
-// BlockLastCommitBlockIDParts block last commit block ID parts
-//
-// swagger:model BlockLastCommitBlockIDParts
-type BlockLastCommitBlockIDParts struct {
-
-	// hash
-	// Example: EE5F3404034C524501629B56E0DDC38FAD651F04
-	Hash string `json:"hash,omitempty"`
-
-	// total
-	// Example: 0
-	Total float64 `json:"total,omitempty"`
-}
-
-// Validate validates this block last commit block ID parts
-func (m *BlockLastCommitBlockIDParts) Validate(formats strfmt.Registry) error {
-	return nil
-}
-
-// ContextValidate validates this block last commit block ID parts based on context it is used
-func (m *BlockLastCommitBlockIDParts) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	return nil
-}
-
-// MarshalBinary interface implementation
-func (m *BlockLastCommitBlockIDParts) MarshalBinary() ([]byte, error) {
-	if m == nil {
-		return nil, nil
-	}
-	return swag.WriteJSON(m)
-}
-
-// UnmarshalBinary interface implementation
-func (m *BlockLastCommitBlockIDParts) UnmarshalBinary(b []byte) error {
-	var res BlockLastCommitBlockIDParts
-	if err := swag.ReadJSON(b, &res); err != nil {
-		return err
-	}
-	*m = res
-	return nil
-}
-
-// BlockLastCommitPrecommitsItems0 block last commit precommits items0
-//
-// swagger:model BlockLastCommitPrecommitsItems0
-type BlockLastCommitPrecommitsItems0 struct {
-
-	// block id
-	BlockID *BlockLastCommitPrecommitsItems0BlockID `json:"block_id,omitempty"`
-
-	// height
-	// Example: 0
-	Height string `json:"height,omitempty"`
-
-	// round
-	// Example: 0
-	Round string `json:"round,omitempty"`
+	// block id flag
+	BlockIDFlag int64 `json:"block_id_flag,omitempty"`
 
 	// signature
 	// Example: 7uTC74QlknqYWEwg7Vn6M8Om7FuZ0EO4bjvuj6rwH1mTUJrRuMMZvAAqT9VjNgP0RA/TDp6u/92AqrZfXJSpBQ==
@@ -463,83 +487,22 @@ type BlockLastCommitPrecommitsItems0 struct {
 	// Example: 2017-12-30T05:53:09.287+01:00
 	Timestamp string `json:"timestamp,omitempty"`
 
-	// type
-	// Example: 2
-	Type float64 `json:"type,omitempty"`
-
 	// validator address
 	ValidatorAddress string `json:"validator_address,omitempty"`
-
-	// validator index
-	// Example: 0
-	ValidatorIndex string `json:"validator_index,omitempty"`
 }
 
-// Validate validates this block last commit precommits items0
-func (m *BlockLastCommitPrecommitsItems0) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateBlockID(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
+// Validate validates this block last commit signatures items0
+func (m *BlockLastCommitSignaturesItems0) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *BlockLastCommitPrecommitsItems0) validateBlockID(formats strfmt.Registry) error {
-	if swag.IsZero(m.BlockID) { // not required
-		return nil
-	}
-
-	if m.BlockID != nil {
-		if err := m.BlockID.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("block_id")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("block_id")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-// ContextValidate validate this block last commit precommits items0 based on the context it is used
-func (m *BlockLastCommitPrecommitsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateBlockID(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *BlockLastCommitPrecommitsItems0) contextValidateBlockID(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.BlockID != nil {
-		if err := m.BlockID.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("block_id")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("block_id")
-			}
-			return err
-		}
-	}
-
+// ContextValidate validates this block last commit signatures items0 based on context it is used
+func (m *BlockLastCommitSignaturesItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (m *BlockLastCommitPrecommitsItems0) MarshalBinary() ([]byte, error) {
+func (m *BlockLastCommitSignaturesItems0) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -547,144 +510,8 @@ func (m *BlockLastCommitPrecommitsItems0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *BlockLastCommitPrecommitsItems0) UnmarshalBinary(b []byte) error {
-	var res BlockLastCommitPrecommitsItems0
-	if err := swag.ReadJSON(b, &res); err != nil {
-		return err
-	}
-	*m = res
-	return nil
-}
-
-// BlockLastCommitPrecommitsItems0BlockID block last commit precommits items0 block ID
-//
-// swagger:model BlockLastCommitPrecommitsItems0BlockID
-type BlockLastCommitPrecommitsItems0BlockID struct {
-
-	// hash
-	// Example: EE5F3404034C524501629B56E0DDC38FAD651F04
-	Hash string `json:"hash,omitempty"`
-
-	// parts
-	Parts *BlockLastCommitPrecommitsItems0BlockIDParts `json:"parts,omitempty"`
-}
-
-// Validate validates this block last commit precommits items0 block ID
-func (m *BlockLastCommitPrecommitsItems0BlockID) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateParts(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *BlockLastCommitPrecommitsItems0BlockID) validateParts(formats strfmt.Registry) error {
-	if swag.IsZero(m.Parts) { // not required
-		return nil
-	}
-
-	if m.Parts != nil {
-		if err := m.Parts.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("block_id" + "." + "parts")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("block_id" + "." + "parts")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-// ContextValidate validate this block last commit precommits items0 block ID based on the context it is used
-func (m *BlockLastCommitPrecommitsItems0BlockID) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.contextValidateParts(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *BlockLastCommitPrecommitsItems0BlockID) contextValidateParts(ctx context.Context, formats strfmt.Registry) error {
-
-	if m.Parts != nil {
-		if err := m.Parts.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("block_id" + "." + "parts")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("block_id" + "." + "parts")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-// MarshalBinary interface implementation
-func (m *BlockLastCommitPrecommitsItems0BlockID) MarshalBinary() ([]byte, error) {
-	if m == nil {
-		return nil, nil
-	}
-	return swag.WriteJSON(m)
-}
-
-// UnmarshalBinary interface implementation
-func (m *BlockLastCommitPrecommitsItems0BlockID) UnmarshalBinary(b []byte) error {
-	var res BlockLastCommitPrecommitsItems0BlockID
-	if err := swag.ReadJSON(b, &res); err != nil {
-		return err
-	}
-	*m = res
-	return nil
-}
-
-// BlockLastCommitPrecommitsItems0BlockIDParts block last commit precommits items0 block ID parts
-//
-// swagger:model BlockLastCommitPrecommitsItems0BlockIDParts
-type BlockLastCommitPrecommitsItems0BlockIDParts struct {
-
-	// hash
-	// Example: EE5F3404034C524501629B56E0DDC38FAD651F04
-	Hash string `json:"hash,omitempty"`
-
-	// total
-	// Example: 0
-	Total float64 `json:"total,omitempty"`
-}
-
-// Validate validates this block last commit precommits items0 block ID parts
-func (m *BlockLastCommitPrecommitsItems0BlockIDParts) Validate(formats strfmt.Registry) error {
-	return nil
-}
-
-// ContextValidate validates this block last commit precommits items0 block ID parts based on context it is used
-func (m *BlockLastCommitPrecommitsItems0BlockIDParts) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
-	return nil
-}
-
-// MarshalBinary interface implementation
-func (m *BlockLastCommitPrecommitsItems0BlockIDParts) MarshalBinary() ([]byte, error) {
-	if m == nil {
-		return nil, nil
-	}
-	return swag.WriteJSON(m)
-}
-
-// UnmarshalBinary interface implementation
-func (m *BlockLastCommitPrecommitsItems0BlockIDParts) UnmarshalBinary(b []byte) error {
-	var res BlockLastCommitPrecommitsItems0BlockIDParts
+func (m *BlockLastCommitSignaturesItems0) UnmarshalBinary(b []byte) error {
+	var res BlockLastCommitSignaturesItems0
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

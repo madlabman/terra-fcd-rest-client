@@ -9,6 +9,7 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
@@ -103,7 +104,7 @@ type GetBankBalancesAddressOKBody struct {
 	Height string `json:"height,omitempty"`
 
 	// result
-	Result *GetBankBalancesAddressOKBodyResult `json:"result,omitempty"`
+	Result []*GetBankBalancesAddressOKBodyResultItems0 `json:"result"`
 }
 
 // Validate validates this get bank balances address o k body
@@ -125,15 +126,22 @@ func (o *GetBankBalancesAddressOKBody) validateResult(formats strfmt.Registry) e
 		return nil
 	}
 
-	if o.Result != nil {
-		if err := o.Result.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("getBankBalancesAddressOK" + "." + "result")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("getBankBalancesAddressOK" + "." + "result")
-			}
-			return err
+	for i := 0; i < len(o.Result); i++ {
+		if swag.IsZero(o.Result[i]) { // not required
+			continue
 		}
+
+		if o.Result[i] != nil {
+			if err := o.Result[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getBankBalancesAddressOK" + "." + "result" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getBankBalancesAddressOK" + "." + "result" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil
@@ -155,15 +163,19 @@ func (o *GetBankBalancesAddressOKBody) ContextValidate(ctx context.Context, form
 
 func (o *GetBankBalancesAddressOKBody) contextValidateResult(ctx context.Context, formats strfmt.Registry) error {
 
-	if o.Result != nil {
-		if err := o.Result.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("getBankBalancesAddressOK" + "." + "result")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("getBankBalancesAddressOK" + "." + "result")
+	for i := 0; i < len(o.Result); i++ {
+
+		if o.Result[i] != nil {
+			if err := o.Result[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getBankBalancesAddressOK" + "." + "result" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getBankBalancesAddressOK" + "." + "result" + "." + strconv.Itoa(i))
+				}
+				return err
 			}
-			return err
 		}
+
 	}
 
 	return nil
@@ -187,10 +199,10 @@ func (o *GetBankBalancesAddressOKBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*GetBankBalancesAddressOKBodyResult get bank balances address o k body result
-swagger:model GetBankBalancesAddressOKBodyResult
+/*GetBankBalancesAddressOKBodyResultItems0 get bank balances address o k body result items0
+swagger:model GetBankBalancesAddressOKBodyResultItems0
 */
-type GetBankBalancesAddressOKBodyResult struct {
+type GetBankBalancesAddressOKBodyResultItems0 struct {
 
 	// amount
 	// Example: 50
@@ -201,18 +213,18 @@ type GetBankBalancesAddressOKBodyResult struct {
 	Denom string `json:"denom,omitempty"`
 }
 
-// Validate validates this get bank balances address o k body result
-func (o *GetBankBalancesAddressOKBodyResult) Validate(formats strfmt.Registry) error {
+// Validate validates this get bank balances address o k body result items0
+func (o *GetBankBalancesAddressOKBodyResultItems0) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-// ContextValidate validates this get bank balances address o k body result based on context it is used
-func (o *GetBankBalancesAddressOKBodyResult) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+// ContextValidate validates this get bank balances address o k body result items0 based on context it is used
+func (o *GetBankBalancesAddressOKBodyResultItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (o *GetBankBalancesAddressOKBodyResult) MarshalBinary() ([]byte, error) {
+func (o *GetBankBalancesAddressOKBodyResultItems0) MarshalBinary() ([]byte, error) {
 	if o == nil {
 		return nil, nil
 	}
@@ -220,8 +232,8 @@ func (o *GetBankBalancesAddressOKBodyResult) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (o *GetBankBalancesAddressOKBodyResult) UnmarshalBinary(b []byte) error {
-	var res GetBankBalancesAddressOKBodyResult
+func (o *GetBankBalancesAddressOKBodyResultItems0) UnmarshalBinary(b []byte) error {
+	var res GetBankBalancesAddressOKBodyResultItems0
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}
