@@ -34,12 +34,8 @@ import (
 type ProposalStatusesInput string
 
 func NewProposalStatusesInput(value ProposalStatusesInput) *ProposalStatusesInput {
-	return &value
-}
-
-// Pointer returns a pointer to a freshly-allocated ProposalStatusesInput.
-func (m ProposalStatusesInput) Pointer() *ProposalStatusesInput {
-	return &m
+	v := value
+	return &v
 }
 
 const (

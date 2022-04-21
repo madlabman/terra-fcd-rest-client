@@ -39542,7 +39542,7 @@ paths:
                     content:
                       type: object
                       properties:
-                        type_url:
+                        "@type":
                           type: string
                           description: >-
                             A URL/resource name that uniquely identifies the
@@ -39600,16 +39600,21 @@ paths:
                             scheme) might be
 
                             used with implementation specific semantics.
-                        value:
-                          type: string
-                          format: byte
-                          description: >-
-                            Must be a valid serialized protocol buffer of the
-                            above specified type.
                         title:
                           type: string
                         description:
                           type: string
+                        recipient:
+                          type: string
+                        amount:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              denom:
+                                type: string
+                              amount:
+                                type: string
                       description: >-
                         `Any` contains an arbitrary serialized protocol buffer
                         message along with a
