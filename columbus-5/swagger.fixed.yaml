@@ -28,9 +28,9 @@ definitions:
       been rejected.
        - PROPOSAL_STATUS_FAILED: PROPOSAL_STATUS_FAILED defines a proposal status of a proposal that has
       failed.
-  proposalStatuses2:
+  proposalStatusesInput:
     type: string
-    enum: &PROPOSAL_STATUSES_2
+    enum: &PROPOSAL_STATUSES_INPUT
       - "0"
       - "1"
       - "2"
@@ -39985,7 +39985,7 @@ paths:
       parameters:
         - name: proposal_status
           type: string
-          enum: *PROPOSAL_STATUSES_2
+          enum: *PROPOSAL_STATUSES_INPUT
           in: query
           required: false
         - name: voter

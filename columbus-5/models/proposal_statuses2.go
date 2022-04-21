@@ -23,10 +23,8 @@ import (
 // period.
 //  - PROPOSAL_STATUS_PASSED: "3" defines a proposal status of a proposal that has
 // passed.
-// # TODO: check this
 //  - PROPOSAL_STATUS_REJECTED: "4" defines a proposal status of a proposal that has
 // been rejected.
-// # TODO: check this
 //  - PROPOSAL_STATUS_FAILED: "5" defines a proposal status of a proposal that has
 // failed.
 //
