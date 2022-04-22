@@ -28,6 +28,32 @@ definitions:
       been rejected.
        - PROPOSAL_STATUS_FAILED: PROPOSAL_STATUS_FAILED defines a proposal status of a proposal that has
       failed.
+  proposalStatusesInput:
+    type: string
+    enum: &PROPOSAL_STATUSES_INPUT
+      - "0"
+      - "1"
+      - "2"
+      - "3"
+      - "4"
+      - "5"
+    default: "0"
+    description: |-
+      ProposalStatus enumerates the valid statuses of a proposal.
+
+       - PROPOSAL_STATUS_UNSPECIFIED: "0" defines the default propopsal status.
+       - PROPOSAL_STATUS_DEPOSIT_PERIOD: "1" defines a proposal status during the deposit
+      period.
+       - PROPOSAL_STATUS_VOTING_PERIOD: "2" defines a proposal status during the voting
+      period.
+       - PROPOSAL_STATUS_PASSED: "3" defines a proposal status of a proposal that has
+      passed.
+      # TODO: check this
+       - PROPOSAL_STATUS_REJECTED: "4" defines a proposal status of a proposal that has
+      been rejected.
+      # TODO: check this
+       - PROPOSAL_STATUS_FAILED: "5" defines a proposal status of a proposal that has
+      failed.
   voteOption:
     type: string
     enum: &VOTE_OPTIONS
@@ -39516,7 +39542,7 @@ paths:
                     content:
                       type: object
                       properties:
-                        type_url:
+                        "@type":
                           type: string
                           description: >-
                             A URL/resource name that uniquely identifies the
@@ -39574,12 +39600,21 @@ paths:
                             scheme) might be
 
                             used with implementation specific semantics.
-                        value:
+                        title:
                           type: string
-                          format: byte
-                          description: >-
-                            Must be a valid serialized protocol buffer of the
-                            above specified type.
+                        description:
+                          type: string
+                        recipient:
+                          type: string
+                        amount:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              denom:
+                                type: string
+                              amount:
+                                type: string
                       description: >-
                         `Any` contains an arbitrary serialized protocol buffer
                         message along with a
@@ -39955,7 +39990,7 @@ paths:
       parameters:
         - name: proposal_status
           type: string
-          enum: *PROPOSAL_STATUSES
+          enum: *PROPOSAL_STATUSES_INPUT
           in: query
           required: false
         - name: voter

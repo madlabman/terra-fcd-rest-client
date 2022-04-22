@@ -1012,20 +1012,92 @@ type ProposalsOKBodyProposalsItems0Content struct {
 	//
 	// Schemes other than `http`, `https` (or the empty scheme) might be
 	// used with implementation specific semantics.
-	TypeURL string `json:"type_url,omitempty"`
+	AtType string `json:"@type,omitempty"`
 
-	// Must be a valid serialized protocol buffer of the above specified type.
-	// Format: byte
-	Value strfmt.Base64 `json:"value,omitempty"`
+	// amount
+	Amount []*ProposalsOKBodyProposalsItems0ContentAmountItems0 `json:"amount"`
+
+	// description
+	Description string `json:"description,omitempty"`
+
+	// recipient
+	Recipient string `json:"recipient,omitempty"`
+
+	// title
+	Title string `json:"title,omitempty"`
 }
 
 // Validate validates this proposals o k body proposals items0 content
 func (o *ProposalsOKBodyProposalsItems0Content) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateAmount(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
 	return nil
 }
 
-// ContextValidate validates this proposals o k body proposals items0 content based on context it is used
+func (o *ProposalsOKBodyProposalsItems0Content) validateAmount(formats strfmt.Registry) error {
+	if swag.IsZero(o.Amount) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Amount); i++ {
+		if swag.IsZero(o.Amount[i]) { // not required
+			continue
+		}
+
+		if o.Amount[i] != nil {
+			if err := o.Amount[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("content" + "." + "amount" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("content" + "." + "amount" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this proposals o k body proposals items0 content based on the context it is used
 func (o *ProposalsOKBodyProposalsItems0Content) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateAmount(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *ProposalsOKBodyProposalsItems0Content) contextValidateAmount(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Amount); i++ {
+
+		if o.Amount[i] != nil {
+			if err := o.Amount[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("content" + "." + "amount" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("content" + "." + "amount" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -1040,6 +1112,46 @@ func (o *ProposalsOKBodyProposalsItems0Content) MarshalBinary() ([]byte, error) 
 // UnmarshalBinary interface implementation
 func (o *ProposalsOKBodyProposalsItems0Content) UnmarshalBinary(b []byte) error {
 	var res ProposalsOKBodyProposalsItems0Content
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*ProposalsOKBodyProposalsItems0ContentAmountItems0 proposals o k body proposals items0 content amount items0
+swagger:model ProposalsOKBodyProposalsItems0ContentAmountItems0
+*/
+type ProposalsOKBodyProposalsItems0ContentAmountItems0 struct {
+
+	// amount
+	Amount string `json:"amount,omitempty"`
+
+	// denom
+	Denom string `json:"denom,omitempty"`
+}
+
+// Validate validates this proposals o k body proposals items0 content amount items0
+func (o *ProposalsOKBodyProposalsItems0ContentAmountItems0) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this proposals o k body proposals items0 content amount items0 based on context it is used
+func (o *ProposalsOKBodyProposalsItems0ContentAmountItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *ProposalsOKBodyProposalsItems0ContentAmountItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *ProposalsOKBodyProposalsItems0ContentAmountItems0) UnmarshalBinary(b []byte) error {
+	var res ProposalsOKBodyProposalsItems0ContentAmountItems0
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}
