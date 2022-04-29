@@ -27332,69 +27332,80 @@ paths:
         '200':
           description: OK
           schema:
-            type: array
-            items:
-              type: object
-              properties:
-                operator_address:
-                  type: string
-                  description: bech32 encoded address
-                  example: terravaloper1wg2mlrxdmnnkkykgqg4znky86nyrtc45q7a85l
-                consensus_pubkey:
+            type: object
+            properties:
+              height:
+                type: string
+              result:
+                type: array
+                items:
                   type: object
                   properties:
-                    type:
+                    operator_address:
                       type: string
-                    value:
+                      description: bech32 encoded address
+                      example: terravaloper1wg2mlrxdmnnkkykgqg4znky86nyrtc45q7a85l
+                    consensus_pubkey:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                        value:
+                          type: string
+                    jailed:
+                      type: boolean
+                    status:
+                      type: integer
+                    tokens:
                       type: string
-                jailed:
-                  type: boolean
-                status:
-                  type: integer
-                tokens:
-                  type: string
-                delegator_shares:
-                  type: string
-                description:
-                  type: object
-                  properties:
-                    moniker:
+                    delegator_shares:
                       type: string
-                    identity:
-                      type: string
-                    website:
-                      type: string
-                    security_contact:
-                      type: string
-                    details:
-                      type: string
-                bond_height:
-                  type: string
-                  example: '0'
-                bond_intra_tx_counter:
-                  type: integer
-                  example: 0
-                unbonding_height:
-                  type: string
-                  example: '0'
-                unbonding_time:
-                  type: string
-                  example: '1970-01-01T00:00:00Z'
-                commission:
-                  type: object
-                  properties:
-                    rate:
+                    description:
+                      type: object
+                      properties:
+                        moniker:
+                          type: string
+                        identity:
+                          type: string
+                        website:
+                          type: string
+                        security_contact:
+                          type: string
+                        details:
+                          type: string
+                    bond_height:
                       type: string
                       example: '0'
-                    max_rate:
+                    bond_intra_tx_counter:
+                      type: integer
+                      example: 0
+                    unbonding_height:
                       type: string
                       example: '0'
-                    max_change_rate:
-                      type: string
-                      example: '0'
-                    update_time:
+                    unbonding_time:
                       type: string
                       example: '1970-01-01T00:00:00Z'
+                    min_self_delegation:
+                      type: string
+                      example: "1"
+                    commission:
+                      type: object
+                      properties:
+                        commission_rates:
+                          type: object
+                          properties:
+                            rate:
+                              type: string
+                              example: '0'
+                            max_rate:
+                              type: string
+                              example: '0'
+                            max_change_rate:
+                              type: string
+                              example: '0'
+                        update_time:
+                          type: string
+                          example: '1970-01-01T00:00:00Z'
         '500':
           description: Internal Server Error
   '/staking/validators/{validatorAddr}':

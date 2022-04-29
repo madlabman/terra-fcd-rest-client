@@ -9,6 +9,7 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
@@ -51,20 +52,22 @@ func NewGetStakingValidatorsOK() *GetStakingValidatorsOK {
 OK
 */
 type GetStakingValidatorsOK struct {
-	Payload []*GetStakingValidatorsOKBodyItems0
+	Payload *GetStakingValidatorsOKBody
 }
 
 func (o *GetStakingValidatorsOK) Error() string {
 	return fmt.Sprintf("[GET /staking/validators][%d] getStakingValidatorsOK  %+v", 200, o.Payload)
 }
-func (o *GetStakingValidatorsOK) GetPayload() []*GetStakingValidatorsOKBodyItems0 {
+func (o *GetStakingValidatorsOK) GetPayload() *GetStakingValidatorsOKBody {
 	return o.Payload
 }
 
 func (o *GetStakingValidatorsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(GetStakingValidatorsOKBody)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
@@ -92,10 +95,114 @@ func (o *GetStakingValidatorsInternalServerError) readResponse(response runtime.
 	return nil
 }
 
-/*GetStakingValidatorsOKBodyItems0 get staking validators o k body items0
-swagger:model GetStakingValidatorsOKBodyItems0
+/*GetStakingValidatorsOKBody get staking validators o k body
+swagger:model GetStakingValidatorsOKBody
 */
-type GetStakingValidatorsOKBodyItems0 struct {
+type GetStakingValidatorsOKBody struct {
+
+	// height
+	Height string `json:"height,omitempty"`
+
+	// result
+	Result []*GetStakingValidatorsOKBodyResultItems0 `json:"result"`
+}
+
+// Validate validates this get staking validators o k body
+func (o *GetStakingValidatorsOKBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateResult(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetStakingValidatorsOKBody) validateResult(formats strfmt.Registry) error {
+	if swag.IsZero(o.Result) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Result); i++ {
+		if swag.IsZero(o.Result[i]) { // not required
+			continue
+		}
+
+		if o.Result[i] != nil {
+			if err := o.Result[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getStakingValidatorsOK" + "." + "result" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getStakingValidatorsOK" + "." + "result" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get staking validators o k body based on the context it is used
+func (o *GetStakingValidatorsOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateResult(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetStakingValidatorsOKBody) contextValidateResult(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Result); i++ {
+
+		if o.Result[i] != nil {
+			if err := o.Result[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getStakingValidatorsOK" + "." + "result" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getStakingValidatorsOK" + "." + "result" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetStakingValidatorsOKBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetStakingValidatorsOKBody) UnmarshalBinary(b []byte) error {
+	var res GetStakingValidatorsOKBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*GetStakingValidatorsOKBodyResultItems0 get staking validators o k body result items0
+swagger:model GetStakingValidatorsOKBodyResultItems0
+*/
+type GetStakingValidatorsOKBodyResultItems0 struct {
 
 	// bond height
 	// Example: 0
@@ -106,19 +213,23 @@ type GetStakingValidatorsOKBodyItems0 struct {
 	BondIntraTxCounter int64 `json:"bond_intra_tx_counter,omitempty"`
 
 	// commission
-	Commission *GetStakingValidatorsOKBodyItems0Commission `json:"commission,omitempty"`
+	Commission *GetStakingValidatorsOKBodyResultItems0Commission `json:"commission,omitempty"`
 
 	// consensus pubkey
-	ConsensusPubkey *GetStakingValidatorsOKBodyItems0ConsensusPubkey `json:"consensus_pubkey,omitempty"`
+	ConsensusPubkey *GetStakingValidatorsOKBodyResultItems0ConsensusPubkey `json:"consensus_pubkey,omitempty"`
 
 	// delegator shares
 	DelegatorShares string `json:"delegator_shares,omitempty"`
 
 	// description
-	Description *GetStakingValidatorsOKBodyItems0Description `json:"description,omitempty"`
+	Description *GetStakingValidatorsOKBodyResultItems0Description `json:"description,omitempty"`
 
 	// jailed
 	Jailed bool `json:"jailed,omitempty"`
+
+	// min self delegation
+	// Example: 1
+	MinSelfDelegation string `json:"min_self_delegation,omitempty"`
 
 	// bech32 encoded address
 	// Example: terravaloper1wg2mlrxdmnnkkykgqg4znky86nyrtc45q7a85l
@@ -139,8 +250,8 @@ type GetStakingValidatorsOKBodyItems0 struct {
 	UnbondingTime string `json:"unbonding_time,omitempty"`
 }
 
-// Validate validates this get staking validators o k body items0
-func (o *GetStakingValidatorsOKBodyItems0) Validate(formats strfmt.Registry) error {
+// Validate validates this get staking validators o k body result items0
+func (o *GetStakingValidatorsOKBodyResultItems0) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := o.validateCommission(formats); err != nil {
@@ -161,7 +272,7 @@ func (o *GetStakingValidatorsOKBodyItems0) Validate(formats strfmt.Registry) err
 	return nil
 }
 
-func (o *GetStakingValidatorsOKBodyItems0) validateCommission(formats strfmt.Registry) error {
+func (o *GetStakingValidatorsOKBodyResultItems0) validateCommission(formats strfmt.Registry) error {
 	if swag.IsZero(o.Commission) { // not required
 		return nil
 	}
@@ -180,7 +291,7 @@ func (o *GetStakingValidatorsOKBodyItems0) validateCommission(formats strfmt.Reg
 	return nil
 }
 
-func (o *GetStakingValidatorsOKBodyItems0) validateConsensusPubkey(formats strfmt.Registry) error {
+func (o *GetStakingValidatorsOKBodyResultItems0) validateConsensusPubkey(formats strfmt.Registry) error {
 	if swag.IsZero(o.ConsensusPubkey) { // not required
 		return nil
 	}
@@ -199,7 +310,7 @@ func (o *GetStakingValidatorsOKBodyItems0) validateConsensusPubkey(formats strfm
 	return nil
 }
 
-func (o *GetStakingValidatorsOKBodyItems0) validateDescription(formats strfmt.Registry) error {
+func (o *GetStakingValidatorsOKBodyResultItems0) validateDescription(formats strfmt.Registry) error {
 	if swag.IsZero(o.Description) { // not required
 		return nil
 	}
@@ -218,8 +329,8 @@ func (o *GetStakingValidatorsOKBodyItems0) validateDescription(formats strfmt.Re
 	return nil
 }
 
-// ContextValidate validate this get staking validators o k body items0 based on the context it is used
-func (o *GetStakingValidatorsOKBodyItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+// ContextValidate validate this get staking validators o k body result items0 based on the context it is used
+func (o *GetStakingValidatorsOKBodyResultItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
 	if err := o.contextValidateCommission(ctx, formats); err != nil {
@@ -240,7 +351,7 @@ func (o *GetStakingValidatorsOKBodyItems0) ContextValidate(ctx context.Context, 
 	return nil
 }
 
-func (o *GetStakingValidatorsOKBodyItems0) contextValidateCommission(ctx context.Context, formats strfmt.Registry) error {
+func (o *GetStakingValidatorsOKBodyResultItems0) contextValidateCommission(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Commission != nil {
 		if err := o.Commission.ContextValidate(ctx, formats); err != nil {
@@ -256,7 +367,7 @@ func (o *GetStakingValidatorsOKBodyItems0) contextValidateCommission(ctx context
 	return nil
 }
 
-func (o *GetStakingValidatorsOKBodyItems0) contextValidateConsensusPubkey(ctx context.Context, formats strfmt.Registry) error {
+func (o *GetStakingValidatorsOKBodyResultItems0) contextValidateConsensusPubkey(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.ConsensusPubkey != nil {
 		if err := o.ConsensusPubkey.ContextValidate(ctx, formats); err != nil {
@@ -272,7 +383,7 @@ func (o *GetStakingValidatorsOKBodyItems0) contextValidateConsensusPubkey(ctx co
 	return nil
 }
 
-func (o *GetStakingValidatorsOKBodyItems0) contextValidateDescription(ctx context.Context, formats strfmt.Registry) error {
+func (o *GetStakingValidatorsOKBodyResultItems0) contextValidateDescription(ctx context.Context, formats strfmt.Registry) error {
 
 	if o.Description != nil {
 		if err := o.Description.ContextValidate(ctx, formats); err != nil {
@@ -289,7 +400,7 @@ func (o *GetStakingValidatorsOKBodyItems0) contextValidateDescription(ctx contex
 }
 
 // MarshalBinary interface implementation
-func (o *GetStakingValidatorsOKBodyItems0) MarshalBinary() ([]byte, error) {
+func (o *GetStakingValidatorsOKBodyResultItems0) MarshalBinary() ([]byte, error) {
 	if o == nil {
 		return nil, nil
 	}
@@ -297,8 +408,8 @@ func (o *GetStakingValidatorsOKBodyItems0) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (o *GetStakingValidatorsOKBodyItems0) UnmarshalBinary(b []byte) error {
-	var res GetStakingValidatorsOKBodyItems0
+func (o *GetStakingValidatorsOKBodyResultItems0) UnmarshalBinary(b []byte) error {
+	var res GetStakingValidatorsOKBodyResultItems0
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}
@@ -306,10 +417,104 @@ func (o *GetStakingValidatorsOKBodyItems0) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-/*GetStakingValidatorsOKBodyItems0Commission get staking validators o k body items0 commission
-swagger:model GetStakingValidatorsOKBodyItems0Commission
+/*GetStakingValidatorsOKBodyResultItems0Commission get staking validators o k body result items0 commission
+swagger:model GetStakingValidatorsOKBodyResultItems0Commission
 */
-type GetStakingValidatorsOKBodyItems0Commission struct {
+type GetStakingValidatorsOKBodyResultItems0Commission struct {
+
+	// commission rates
+	CommissionRates *GetStakingValidatorsOKBodyResultItems0CommissionCommissionRates `json:"commission_rates,omitempty"`
+
+	// update time
+	// Example: 1970-01-01T00:00:00Z
+	UpdateTime string `json:"update_time,omitempty"`
+}
+
+// Validate validates this get staking validators o k body result items0 commission
+func (o *GetStakingValidatorsOKBodyResultItems0Commission) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateCommissionRates(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetStakingValidatorsOKBodyResultItems0Commission) validateCommissionRates(formats strfmt.Registry) error {
+	if swag.IsZero(o.CommissionRates) { // not required
+		return nil
+	}
+
+	if o.CommissionRates != nil {
+		if err := o.CommissionRates.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("commission" + "." + "commission_rates")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("commission" + "." + "commission_rates")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get staking validators o k body result items0 commission based on the context it is used
+func (o *GetStakingValidatorsOKBodyResultItems0Commission) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateCommissionRates(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetStakingValidatorsOKBodyResultItems0Commission) contextValidateCommissionRates(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.CommissionRates != nil {
+		if err := o.CommissionRates.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("commission" + "." + "commission_rates")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("commission" + "." + "commission_rates")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetStakingValidatorsOKBodyResultItems0Commission) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetStakingValidatorsOKBodyResultItems0Commission) UnmarshalBinary(b []byte) error {
+	var res GetStakingValidatorsOKBodyResultItems0Commission
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*GetStakingValidatorsOKBodyResultItems0CommissionCommissionRates get staking validators o k body result items0 commission commission rates
+swagger:model GetStakingValidatorsOKBodyResultItems0CommissionCommissionRates
+*/
+type GetStakingValidatorsOKBodyResultItems0CommissionCommissionRates struct {
 
 	// max change rate
 	// Example: 0
@@ -322,24 +527,20 @@ type GetStakingValidatorsOKBodyItems0Commission struct {
 	// rate
 	// Example: 0
 	Rate string `json:"rate,omitempty"`
-
-	// update time
-	// Example: 1970-01-01T00:00:00Z
-	UpdateTime string `json:"update_time,omitempty"`
 }
 
-// Validate validates this get staking validators o k body items0 commission
-func (o *GetStakingValidatorsOKBodyItems0Commission) Validate(formats strfmt.Registry) error {
+// Validate validates this get staking validators o k body result items0 commission commission rates
+func (o *GetStakingValidatorsOKBodyResultItems0CommissionCommissionRates) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-// ContextValidate validates this get staking validators o k body items0 commission based on context it is used
-func (o *GetStakingValidatorsOKBodyItems0Commission) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+// ContextValidate validates this get staking validators o k body result items0 commission commission rates based on context it is used
+func (o *GetStakingValidatorsOKBodyResultItems0CommissionCommissionRates) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (o *GetStakingValidatorsOKBodyItems0Commission) MarshalBinary() ([]byte, error) {
+func (o *GetStakingValidatorsOKBodyResultItems0CommissionCommissionRates) MarshalBinary() ([]byte, error) {
 	if o == nil {
 		return nil, nil
 	}
@@ -347,8 +548,8 @@ func (o *GetStakingValidatorsOKBodyItems0Commission) MarshalBinary() ([]byte, er
 }
 
 // UnmarshalBinary interface implementation
-func (o *GetStakingValidatorsOKBodyItems0Commission) UnmarshalBinary(b []byte) error {
-	var res GetStakingValidatorsOKBodyItems0Commission
+func (o *GetStakingValidatorsOKBodyResultItems0CommissionCommissionRates) UnmarshalBinary(b []byte) error {
+	var res GetStakingValidatorsOKBodyResultItems0CommissionCommissionRates
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}
@@ -356,10 +557,10 @@ func (o *GetStakingValidatorsOKBodyItems0Commission) UnmarshalBinary(b []byte) e
 	return nil
 }
 
-/*GetStakingValidatorsOKBodyItems0ConsensusPubkey get staking validators o k body items0 consensus pubkey
-swagger:model GetStakingValidatorsOKBodyItems0ConsensusPubkey
+/*GetStakingValidatorsOKBodyResultItems0ConsensusPubkey get staking validators o k body result items0 consensus pubkey
+swagger:model GetStakingValidatorsOKBodyResultItems0ConsensusPubkey
 */
-type GetStakingValidatorsOKBodyItems0ConsensusPubkey struct {
+type GetStakingValidatorsOKBodyResultItems0ConsensusPubkey struct {
 
 	// type
 	Type string `json:"type,omitempty"`
@@ -368,18 +569,18 @@ type GetStakingValidatorsOKBodyItems0ConsensusPubkey struct {
 	Value string `json:"value,omitempty"`
 }
 
-// Validate validates this get staking validators o k body items0 consensus pubkey
-func (o *GetStakingValidatorsOKBodyItems0ConsensusPubkey) Validate(formats strfmt.Registry) error {
+// Validate validates this get staking validators o k body result items0 consensus pubkey
+func (o *GetStakingValidatorsOKBodyResultItems0ConsensusPubkey) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-// ContextValidate validates this get staking validators o k body items0 consensus pubkey based on context it is used
-func (o *GetStakingValidatorsOKBodyItems0ConsensusPubkey) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+// ContextValidate validates this get staking validators o k body result items0 consensus pubkey based on context it is used
+func (o *GetStakingValidatorsOKBodyResultItems0ConsensusPubkey) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (o *GetStakingValidatorsOKBodyItems0ConsensusPubkey) MarshalBinary() ([]byte, error) {
+func (o *GetStakingValidatorsOKBodyResultItems0ConsensusPubkey) MarshalBinary() ([]byte, error) {
 	if o == nil {
 		return nil, nil
 	}
@@ -387,8 +588,8 @@ func (o *GetStakingValidatorsOKBodyItems0ConsensusPubkey) MarshalBinary() ([]byt
 }
 
 // UnmarshalBinary interface implementation
-func (o *GetStakingValidatorsOKBodyItems0ConsensusPubkey) UnmarshalBinary(b []byte) error {
-	var res GetStakingValidatorsOKBodyItems0ConsensusPubkey
+func (o *GetStakingValidatorsOKBodyResultItems0ConsensusPubkey) UnmarshalBinary(b []byte) error {
+	var res GetStakingValidatorsOKBodyResultItems0ConsensusPubkey
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}
@@ -396,10 +597,10 @@ func (o *GetStakingValidatorsOKBodyItems0ConsensusPubkey) UnmarshalBinary(b []by
 	return nil
 }
 
-/*GetStakingValidatorsOKBodyItems0Description get staking validators o k body items0 description
-swagger:model GetStakingValidatorsOKBodyItems0Description
+/*GetStakingValidatorsOKBodyResultItems0Description get staking validators o k body result items0 description
+swagger:model GetStakingValidatorsOKBodyResultItems0Description
 */
-type GetStakingValidatorsOKBodyItems0Description struct {
+type GetStakingValidatorsOKBodyResultItems0Description struct {
 
 	// details
 	Details string `json:"details,omitempty"`
@@ -417,18 +618,18 @@ type GetStakingValidatorsOKBodyItems0Description struct {
 	Website string `json:"website,omitempty"`
 }
 
-// Validate validates this get staking validators o k body items0 description
-func (o *GetStakingValidatorsOKBodyItems0Description) Validate(formats strfmt.Registry) error {
+// Validate validates this get staking validators o k body result items0 description
+func (o *GetStakingValidatorsOKBodyResultItems0Description) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-// ContextValidate validates this get staking validators o k body items0 description based on context it is used
-func (o *GetStakingValidatorsOKBodyItems0Description) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+// ContextValidate validates this get staking validators o k body result items0 description based on context it is used
+func (o *GetStakingValidatorsOKBodyResultItems0Description) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (o *GetStakingValidatorsOKBodyItems0Description) MarshalBinary() ([]byte, error) {
+func (o *GetStakingValidatorsOKBodyResultItems0Description) MarshalBinary() ([]byte, error) {
 	if o == nil {
 		return nil, nil
 	}
@@ -436,8 +637,8 @@ func (o *GetStakingValidatorsOKBodyItems0Description) MarshalBinary() ([]byte, e
 }
 
 // UnmarshalBinary interface implementation
-func (o *GetStakingValidatorsOKBodyItems0Description) UnmarshalBinary(b []byte) error {
-	var res GetStakingValidatorsOKBodyItems0Description
+func (o *GetStakingValidatorsOKBodyResultItems0Description) UnmarshalBinary(b []byte) error {
+	var res GetStakingValidatorsOKBodyResultItems0Description
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}
